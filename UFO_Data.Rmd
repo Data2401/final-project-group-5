@@ -19,7 +19,11 @@ ufo_data <- read.csv("ufo_data.csv")
 
 glimpse(ufo_data)
 
-
+new_ufo <- ufo_data %>% select("datetime", "city", "state", "country", "shape", "duration..seconds.", "latitude", "longitude") %>% 
+  mutate(across(where(is.character), trimws)) %>% #filtering the white spaces
+  filter(if_all(everything(), ~ . != "")) %>% 
+  na.omit() %>% 
+  separate(col=datetime, into = c("date", "time"), sep = " ")
 ```
 
 #Explaining the UFO data: 
@@ -31,19 +35,15 @@ The UFO data-set gives us UFO sightings information. Those include date, time, l
 
 "new_ufo" is are cleaned and updated dataset. 
 
-```{r}
-new_ufo <- ufo_data %>% select("datetime", "city", "state", "country", "shape", "duration..seconds.", "latitude", "longitude") %>% 
-  mutate(across(where(is.character), trimws)) %>% #filtering the white spaces
-  filter(if_all(everything(), ~ . != "")) %>% 
-  na.omit() %>% 
-  separate(col=datetime, into = c("date", "time"), sep = " ")
+#Two Questions About Dataset
 
-```
+1. Where in the country experiences the most occurrences of extraterrestrial activity? Do other places in the world experience similar activity?
+2. Is there a time period where activity is heightened? Seasons? Time of day?
 
 ```{r}
-us_counts <- ufo_data %>% filter(country == "us") %>% group_by(state) %>% summarise(count = n()) %>% ggplot() + 
+us_counts <- ufo_data %>% filter(country == "us") %>%
+  ggplot() + 
   geom_bar(aes(y = state)) + 
-  scale_x_continuous() +
   labs(
   title = "UFO Sightings by State",
   subtitle = "Sightings listed are only in U.S."
