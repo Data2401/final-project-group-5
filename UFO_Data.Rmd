@@ -40,5 +40,30 @@ new_ufo <- ufo_data %>% select("datetime", "city", "state", "country", "shape", 
 
 ```
 
+```{r}
+us_counts <- ufo_data %>% filter(country == "us") %>% group_by(state) %>% summarise(count = n()) %>% ggplot() + 
+  geom_bar(aes(y = state)) + 
+  scale_x_continuous() +
+  labs(
+  title = "UFO Sightings by State",
+  subtitle = "Sightings listed are only in U.S."
+)
 
+us_counts
+```
+
+```{r}
+library(maps)
+ufo_data$state <- tolower(ufo_data$state)  ## states need to be lowercase for linking
+
+states_map <- map_data("state") ## this gives us the lat and long for each point of each state.
+  
+map_data("state")
+map_plot <-  ggplot(data =  votedata %>% filter(year == 2008), aes(map_id = state)) +
+    geom_map(aes(fill = demVote), map = states_map) +
+    expand_limits(x = states_map$long, y = states_map$lat)
+
+map_plot 
+
+```
 
