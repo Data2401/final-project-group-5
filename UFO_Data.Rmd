@@ -19,11 +19,7 @@ ufo_data <- read.csv("ufo_data.csv")
 
 glimpse(ufo_data)
 
-new_ufo <- ufo_data %>% select("datetime", "city", "state", "country", "shape", "duration..seconds.", "latitude", "longitude") %>% 
-  mutate(across(where(is.character), trimws)) %>% #filtering the white spaces
-  filter(if_all(everything(), ~ . != "")) %>% 
-  na.omit() %>% 
-  separate(col=datetime, into = c("date", "time"), sep = " ")
+
 ```
 
 #Explaining the UFO data: 
@@ -35,15 +31,19 @@ The UFO data-set gives us UFO sightings information. Those include date, time, l
 
 "new_ufo" is are cleaned and updated dataset. 
 
-#Two Questions About Dataset
+```{r}
+new_ufo <- ufo_data %>% select("datetime", "city", "state", "country", "shape", "duration..seconds.", "latitude", "longitude") %>% 
+  mutate(across(where(is.character), trimws)) %>% #filtering the white spaces
+  filter(if_all(everything(), ~ . != "")) %>% 
+  na.omit() %>% 
+  separate(col=datetime, into = c("date", "time"), sep = " ")
 
-1. Where in the country experiences the most occurrences of extraterrestrial activity? Do other places in the world experience similar activity?
-2. Is there a time period where activity is heightened? Seasons? Time of day?
+```
 
 ```{r}
-us_counts <- ufo_data %>% filter(country == "us") %>%
-  ggplot() + 
+us_counts <- ufo_data %>% filter(country == "us") %>% group_by(state) %>% summarise(count = n()) %>% ggplot() + 
   geom_bar(aes(y = state)) + 
+  scale_x_continuous() +
   labs(
   title = "UFO Sightings by State",
   subtitle = "Sightings listed are only in U.S."
@@ -51,6 +51,7 @@ us_counts <- ufo_data %>% filter(country == "us") %>%
 
 us_counts
 ```
+
 
 ```{r}
 library(maps)
@@ -64,6 +65,15 @@ map_plot <-  ggplot(data =  votedata %>% filter(year == 2008), aes(map_id = stat
     expand_limits(x = states_map$long, y = states_map$lat)
 
 map_plot 
+
+```
+
+##Plot date 
+emanuel
+My questions: plot the date and see how it looks like over time. Is there a specific season during the years that there are more sightings? Are these more apparent at night/day? A specific location? MAYBE: What are my changes of going there and seeing them?  
+
+```{r}
+
 
 ```
 
