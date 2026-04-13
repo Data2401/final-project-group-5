@@ -70,7 +70,7 @@ map_plot
 
 ##Plot date 
 emanuel
-My questions: plot the date and see how it looks like over time. Is there a specific season during the years that there are more sightings? Are these more apparent at night/day? A specific location? MAYBE: What are my changes of going there and seeing them?  
+My questions: plot the date and see how it looks like over the years. Is there a specific season during the years that there are more sightings? Are these more apparent at night/day? A specific location? MAYBE: What are my changes of going there and seeing them?  
 
 ```{r}
 
