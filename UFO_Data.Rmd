@@ -1,0 +1,79 @@
+---
+title: "UFO_Data"
+author: "Tyler Guerrero, Emanuel Padilla, Cameron Snyder"
+date: "2026-04-08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+
+```{r}
+library(tidyverse)
+library(dplyr)
+ufo_data <- read.csv("ufo_data.csv")
+
+glimpse(ufo_data)
+
+
+```
+
+#Explaining the UFO data: 
+Variables to get rid off: "duration..hours.min.", "comments", "date.posted"
+
+Variables we are using: datetime, city, state, country, shape, duration..seconds., latitude, longitude.  
+
+The UFO data-set gives us UFO sightings information. Those include date, time, location, and shape. 
+
+"new_ufo" is are cleaned and updated dataset. 
+
+```{r}
+new_ufo <- ufo_data %>% select("datetime", "city", "state", "country", "shape", "duration..seconds.", "latitude", "longitude") %>% 
+  mutate(across(where(is.character), trimws)) %>% #filtering the white spaces
+  filter(if_all(everything(), ~ . != "")) %>% 
+  na.omit() %>% 
+  separate(col=datetime, into = c("date", "time"), sep = " ")
+
+```
+
+```{r}
+us_counts <- ufo_data %>% filter(country == "us") %>% group_by(state) %>% summarise(count = n()) %>% ggplot() + 
+  geom_bar(aes(y = state)) + 
+  scale_x_continuous() +
+  labs(
+  title = "UFO Sightings by State",
+  subtitle = "Sightings listed are only in U.S."
+)
+
+us_counts
+```
+
+
+```{r}
+library(maps)
+ufo_data$state <- tolower(ufo_data$state)  ## states need to be lowercase for linking
+
+states_map <- map_data("state") ## this gives us the lat and long for each point of each state.
+  
+map_data("state")
+map_plot <-  ggplot(data =  votedata %>% filter(year == 2008), aes(map_id = state)) +
+    geom_map(aes(fill = demVote), map = states_map) +
+    expand_limits(x = states_map$long, y = states_map$lat)
+
+map_plot 
+
+```
+
+##Plot date 
+emanuel
+My questions: plot the date and see how it looks like over time. Is there a specific season during the years that there are more sightings? Are these more apparent at night/day? A specific location? MAYBE: What are my changes of going there and seeing them?  
+
+```{r}
+
+
+```
+
