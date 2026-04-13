@@ -1,0 +1,24 @@
+---
+title: "Tyler_WorkingFile"
+author: "me"
+date: "2026-04-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
+library(grid)
+library(RColorBrewer)
+library(ggrepel)
+library(ggthemes)
+library(viridis)
+library(ggjoy)
+```
+
+## R Markdown
+
+
