@@ -33,7 +33,7 @@ The UFO data-set gives us UFO sightings information. Those include date, time, l
 
 ```{r}
 new_ufo <- ufo_data %>% select("datetime", "city", "state", "country", "shape", "duration..seconds.", "latitude", "longitude") %>% 
-  mutate(across(where(is.character), trimws)) %>% #filtering the white spaces
+  mutate(across(where(is.character), trimws)) %>% #filtering the white spaces 
   filter(if_all(everything(), ~ . != "")) %>% 
   na.omit() %>% 
   separate(col=datetime, into = c("date", "time"), sep = " ")
