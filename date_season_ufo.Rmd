@@ -1,0 +1,209 @@
+---
+title: "date_season_ufo"
+output: html_document
+--- 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##Plot date 
+My questions: plot the date and see how it looks like over the years. Is there a specific season during the years that there are more sightings? Are these more apparent at night/day? A specific location? MAYBE: What are my changes of going there and seeing them? 
+
+NOTES: 
+-The Data is from 1910-2014 (104 years)
+-From the span of 104 years, only 84 years have data. That means that theres a total of 20 years of consecutive no sightings of ufo. 
+- 
+
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(lubridate) #for the mdy()
+library(ggplot2)
+
+#glimpse(new_ufo)
+
+new_ufo <- new_ufo %>% 
+  mutate(date = mdy(date)) %>%   # convert chr -> Date
+  arrange(date) %>%                  # oldest to latest
+  na.omit()
+
+
+```
+
+When and where are UFO sightings more commonly reported? What are the time of day, time of year, and location that will maximize someones chances of witnessing an UFO? 
+
+1) how has the number of UFO sightings have changed over the years?
+- make a cutoff to 2014
+```{r}
+years_ufo <- new_ufo %>% 
+  mutate(year = year(date)) %>%  # pull out year as numeric
+  count(year, name = "n")        # n = number of rows per year
+
+ggplot(years_ufo, aes(x = year, y = n)) +
+  geom_line(color = "red", linewidth = 0.8) +
+  geom_point(size = 1.2, color = "blue") +
+  scale_x_continuous(breaks = seq(min(years_ufo$year), max(years_ufo$year), by = 5)) +
+  scale_y_continuous(limits = c(0, NA),
+                     breaks = seq(0, 7000, by = 500)) +
+  labs(
+    title = "UFO Sightings Over the Years",
+    x = "Year",
+    y = "Number of Sightings"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+
+
+```
+
+2) Whne are UFO sightings more common during the year?
+```{r}
+
+months_ufo <- new_ufo %>%
+  mutate(
+    month = month(date, label = TRUE, abbr = TRUE),
+    month_num = month(date),
+    season = case_when(
+      month_num %in% c(12, 1, 2)  ~ "Winter",
+      month_num %in% c(3, 4, 5)   ~ "Spring",
+      month_num %in% c(6, 7, 8)   ~ "Summer",
+      month_num %in% c(9, 10, 11) ~ "Fall"
+    )
+  ) %>%
+  count(month, season, name = "n")
+
+ggplot(months_ufo, aes(x = month, y = n, fill = season)) +
+  geom_col(color="black") +
+  scale_fill_manual(values = c(
+    "Winter" = "blue",
+    "Spring" = "green",
+    "Summer" = "red",
+    "Fall"   = "yellow"
+  )) +
+  labs(
+    title = "UFO Sightings by Month and Season",
+    x     = "Month",
+    y     = "Number of Sightings",
+    fill  = "Season"
+  ) +
+  theme_minimal()
+```
+```{r}
+season_state_ufo <- new_ufo %>%
+  mutate(
+    month_num = month(date),
+    season = case_when(
+      month_num %in% c(12, 1, 2)  ~ "Winter",
+      month_num %in% c(3, 4, 5)   ~ "Spring",
+      month_num %in% c(6, 7, 8)   ~ "Summer",
+      month_num %in% c(9, 10, 11) ~ "Fall"
+    )
+  ) %>%
+  filter(country == "us") %>%        #focusing on the united states 
+  count(season, state, name = "n") %>%
+  group_by(season) %>%
+  slice_max(n, n = 10)               #top 10 states per season
+
+ggplot(season_state_ufo, aes(x = reorder(state, n), y = n, fill = season)) +
+  geom_col(color="black", show.legend = FALSE) +
+  coord_flip() +
+  facet_wrap(~ season, scales = "free_y") +
+  scale_fill_manual(values = c(
+    "Winter" = "blue",
+    "Spring" = "green",
+    "Summer" = "red",
+    "Fall"   = "yellow"
+  )) +
+  labs(
+    title = "Top 10 States for UFO Sightings by Season in the United States",
+    x     = "State",
+    y     = "Number of Sightings"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+
+
+
+new_ufo <- new_ufo %>% 
+  mutate(latitude = as.numeric(latitude) )
+glimpse(new_ufo)
+
+season_map_ufo <- new_ufo %>%
+  mutate(
+    month_num = month(date),
+    season = case_when(
+      month_num %in% c(12, 1, 2)  ~ "Winter",
+      month_num %in% c(3, 4, 5)   ~ "Spring",
+      month_num %in% c(6, 7, 8)   ~ "Summer",
+      month_num %in% c(9, 10, 11) ~ "Fall"
+    )
+  ) %>%
+  filter(country == "us",
+         between(latitude, 24, 50),       # continental US bounds
+         between(longitude, -125, -66))
+
+ggplot(season_map_ufo, aes(x = longitude, y = latitude, color = season)) +
+  geom_point(alpha = 0.3, size = 0.8) +  # alpha handles overplotting
+  facet_wrap(~ season) +
+  scale_color_manual(values = c(
+    "Winter" = "steelblue",
+    "Spring" = "mediumseagreen",
+    "Summer" = "tomato",
+    "Fall"   = "darkorange"
+  )) +
+  labs(
+    title = "UFO Sightings Location by Season",
+    x     = "Longitude",
+    y     = "Latitude",
+    color = "Season"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+3) Are UFO sightings more frequestly reported at night or during the day?
+```{r}
+
+glimpse(new_ufo)
+
+time_ufo <- new_ufo %>%
+  mutate(
+    hour = as.integer(str_extract(time, "^\\d+")),
+    day_night = if_else(hour >= 6 & hour < 20, "Day", "Night")
+  ) %>%
+  count(day_night, name = "n")
+
+ggplot(time_ufo, aes(x = day_night, y = n, fill = day_night)) +
+  geom_col(color="black", width = 0.5) +
+  scale_fill_manual(values = c("Day" = "yellow", "Night" = "blue")) +
+  labs(
+    title = "UFO Sightings: Day vs. Night",
+    x     = "Time of Day",
+    y     = "Number of Sightings",
+    fill  = "Time of Day"
+  ) +
+  theme_minimal()
+```
+
+Do some UFO shapes tend to be seen for longer durations than others?
+```{r}
+shape_counts <- new_ufo %>%
+  count(shape, name = "n") %>%
+  arrange(desc(n))
+
+shape_counts
+
+
+```
+
+
+
+
+
+
+
