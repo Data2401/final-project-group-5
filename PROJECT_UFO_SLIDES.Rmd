@@ -17,6 +17,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
+
 library(ggplot2)
 library(dplyr)
 library(gridExtra)
@@ -119,14 +120,14 @@ glimpse(df)
 
 
 
-#Slide 5: Key Terms and Column Focus {data-background="ETfinger.jpg"}
+# Slide 5: Key Terms and Column Focus {data-background="ETfinger.jpg"}
 
  -
 
 
 
 
-#Slide 6: Overview of Data and Where
+# Slide 6: Overview of Data and Where {data-background="ETfinger.jpg"}
 
 ```{r}
 df %>% 
@@ -143,10 +144,35 @@ df %>%
 
 ```
 
+# slide: Number of Sightings Over the Years {data-background="ETfinger.jpg"}
+```{r}
+years_ufo <- new_ufo %>% 
+  mutate(date = as.Date(date, format = "%m/%d/%Y"),
+         year = lubridate::year(date)) %>%
+  count(year, name = "n")
+
+ggplot(years_ufo, aes(x = year, y = n)) +
+  geom_line(color = "red", linewidth = 0.8) +
+  geom_point(size = 1.2, color = "blue") +
+  scale_x_continuous(
+    limits = c(min(years_ufo$year), 2013),
+    breaks = seq(min(years_ufo$year), max(years_ufo$year), by = 5)) +
+  scale_y_continuous(limits = c(0, NA),
+                     breaks = seq(0, 7000, by = 500)) +
+  labs(
+    title = "UFO Sightings Over the Years",
+    x = "Year",
+    y = "Number of Sightings"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
 
 
+```
 
-#Slide 7: Worldwide View
+
+# Slide 7: Worldwide View {data-background="ETfinger.jpg"}
 
 ```{r}
 countries_map <- map_data("world")
@@ -161,7 +187,7 @@ world_map + geom_point(data=df,aes(x=longitude,y=latitude),alpha=.5,size=.25) + 
 
 
 
-#slide 8: United States View
+# slide 8: United States View {data-background="ETfinger.jpg"}
 
 ```{r}
 states_map <- map_data("state")
@@ -182,17 +208,81 @@ ggplot(df, aes(x=reorder(state.province, state.province, FUN=length), fill=state
 ```
 
 
+# Top states and Seasons {data-background="ETfinger.jpg"}
+```{r}
+season_state_ufo <- new_ufo %>%
+  mutate(
+    date = parse_date_time(date, orders = c("mdy", "ymd", "dmy", "mdy HM", "ymd HM")),
+    month_num = month(date),
+    season = case_when(
+      month_num %in% c(12, 1, 2)  ~ "Winter",
+      month_num %in% c(3, 4, 5)   ~ "Spring",
+      month_num %in% c(6, 7, 8)   ~ "Summer",
+      month_num %in% c(9, 10, 11) ~ "Fall"
+    )
+  ) %>%
+  filter(country == "us") %>%        #focusing on the united states 
+  count(season, state, name = "n") %>%
+  group_by(season) %>%
+  slice_max(n, n = 10)               #top 10 states per season
+
+ggplot(season_state_ufo, aes(x = reorder(state, n), y = n, fill = season)) +
+  geom_col(color="black", show.legend = FALSE) +
+  coord_flip() +
+  facet_wrap(~ season, scales = "free_y") +
+  scale_fill_manual(values = c(
+    "Winter" = "blue",
+    "Spring" = "green",
+    "Summer" = "red",
+    "Fall"   = "yellow"
+  )) +
+  labs(
+    title = "Top 10 States for UFO Sightings by Season in the United States",
+    x = "State",
+    y= "Number of Sightings"
+  ) +
+  theme_minimal()
+```
+
+# slide: Day or Night {data-background="ETfinger.jpg"}
+```{r}
+
+ca_summer_tod <- new_ufo %>%
+  mutate(
+    date = parse_date_time(date, orders = c("mdy", "ymd", "dmy")),
+    hour= as.integer(substr(time, 1, 2)),  # getting the  hour from the time var string
+    time_of_day = case_when(
+      hour >= 6 & hour < 20~ "Daytime",
+      TRUE~ "Nighttime"
+    ),
+    month_num   = month(date),
+    season      = case_when(
+      month_num %in% c(12, 1, 2) ~ "Winter",
+      month_num %in% c(3, 4, 5)  ~ "Spring",
+      month_num %in% c(6, 7, 8)  ~ "Summer",
+      month_num %in% c(9,10,11)  ~ "Fall"
+    )
+  ) %>%
+  filter(country == "us", state == "ca", season == "Summer") %>%
+  count(time_of_day, name = "n")
 
 
-#Slide 9: Seasons
+ggplot(ca_summer_tod, aes(x = time_of_day, y = n, fill = time_of_day)) +
+  geom_col(color = "black", show.legend = FALSE) +
+  scale_fill_manual(values = c(
+    "Daytime"   = "gold",
+    "Nighttime" = "navy"
+  )) +
+  labs(
+    title = "UFO Sightings by Time of Day in California (Summer)",
+    x = "Time of Day",
+    y= "Number of Sightings"
+  ) +
+  theme_minimal()
+```
 
-When are visits most common during the year?
 
-
-
-
-
-#Slide 10: Additional Graphs
+# Slide 10: Additional Graphs {data-background="ETfinger.jpg"}
 
 ```{r}
 df %>% group_by(hour,month_name_ordered) %>% 
@@ -223,11 +313,23 @@ ggplot(df, aes(x=reorder(UFO_shape, UFO_shape, FUN=length), fill=UFO_shape)) +
 
 
 
-#Slide 11: Duration of Encounters
+# Slide 11: Duration of Encounters {data-background="ETfinger.jpg"}
 
 ```{r}
 df %>% filter(length_min>1e6) %>% 
   select(-c(length_of_encounter_seconds,DATE_2,description,year, month, day ,hour, min, month_name, month_name_ordered,state.province))
 ```
 
+some UFO shapes tend to be seen for longer durations than others?
+```{r}
+shape_counts <- new_ufo %>%
+  count(shape, name = "n") %>%
+  arrange(desc(n))
+
+shape_counts
+
+
+```
   
+  
+# summary {data-background="ETfinger.jpg"}
