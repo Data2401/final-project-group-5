@@ -209,8 +209,39 @@ When are visits most common during the year?
 #Slide 10: Additional Graphs
 
 ```{r}
+df %>% group_by(hour,month_name_ordered) %>% 
+  summarize(count=n()) %>% 
+  ggplot(aes(x=factor(hour),y=count,color=month_name_ordered,group=month_name_ordered)) + 
+  geom_line() + 
+  theme_fivethirtyeight() + 
+  scale_color_manual(name="",values=brewer.pal(12,'Paired')) + 
+  geom_point(color='black',size=.5,alpha=1) + 
+  ggtitle('UFO Observations During the Day','Time Based on 24-hour Cycle')
+
+df %>% group_by(weekday,month_name_ordered) %>% 
+  summarize(count=n()) %>% 
+  ggplot(aes(x=weekday,y=count,color=month_name_ordered,group=month_name_ordered)) + 
+  geom_line() + 
+  theme_fivethirtyeight() + 
+  scale_color_brewer(name="",palette='Paired') + 
+  geom_point(color='black',size=.5,alpha=1) + 
+  ggtitle('UFO Observations During the Week')
+
+ggplot(df, aes(x=reorder(UFO_shape, UFO_shape, FUN=length), fill=UFO_shape)) + 
+  geom_bar(show.legend=F) +
+  coord_flip() +
+  theme_bw() + xlab("UFO Shape") + ylab("Number of Appearances") + ggtitle("UFO Shapes Seen Worldwide");
 
 ```
 
+---
+
+---
+#Slide 11: Duration of Encounters
+
+```{r}
+df %>% filter(length_min>1e6) %>% 
+  select(-c(length_of_encounter_seconds,DATE_2,description,year, month, day ,hour, min, month_name, month_name_ordered,state.province))
+```
 ---
   
