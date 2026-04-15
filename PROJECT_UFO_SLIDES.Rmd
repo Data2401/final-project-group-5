@@ -1,0 +1,65 @@
+---
+title: "WHERE CAN YOU FIND E.T.?"
+author: "Tyler Guerrero, Emanuel Padilla, Cameron Snyder"
+output:
+  revealjs::revealjs_presentation:
+    theme: black          
+    transition: slide      
+    self_contained: false 
+    center: false
+    reveal_options:
+      slideNumber: true
+      scrollable: true     
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# slide 1 {data-background="ETfinger.jpg"}
+- introduction 
+- questions (problem statement & subquestions)
+
+# Slide 2 {data-background="ETfinger.jpg"}
+- get ready slide: libraries functions used
+
+# Slide 3 {data-background="ETfinger.jpg"}
+- unfiltered data
+- data key terms
+-0
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+- 
+-
+-heyyy
+-
+-
+-
+-
+```{r}
+library(tidyverse)
+library(dplyr)
+library(lubridate) #for the mdy()
+library(ggplot2)
+
+
+```
+
+
+-
+
+# slide 4 {data-background="ETfinger.jpg"}
+- answering our questions
+- include our filtered data, relationships, plots/graphs. tables, etc
+
+#slide 5 {data-background="ETfinger.jpg"}
+- summary
+
+  
