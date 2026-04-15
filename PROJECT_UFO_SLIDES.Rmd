@@ -1,7 +1,9 @@
 ---
 title: "WHERE CAN YOU FIND E.T.?"
 author: "Tyler Guerrero, Emanuel Padilla, Cameron Snyder"
-output: 
+output: slidy_presentation
+---
+
   revealjs::revealjs_presentation:
     theme: black          
     transition: slide      
@@ -10,9 +12,7 @@ output:
     scrollable: true  
     reveal_options:
       slideNumber: true
-
- 
----
+      
 ```{css, echo=FALSE}
 .reveal .slides {
   overflow-y: auto !important;
@@ -49,6 +49,9 @@ new_ufo <- ufo_data %>% select("datetime", "city", "state", "country", "shape", 
 
 # Adding new data set and changing strings to numeric values for data manipulation
 df <- read.csv('ufo_sighting_data.csv',sep=',',stringsAsFactors=F)
+# df <- mutate(df, Date_time = mdy_hm(Date_time),
+#             year = year(Date_time))
+
 df$latitude <- as.numeric(df$latitude)
 df$year <- sapply(df$Date_time, function(x) as.numeric(strsplit(strsplit(x," ")[[1]][1],"/")[[1]][3]))
 df$month <- sapply(df$Date_time, function(x) as.numeric(strsplit(strsplit(x," ")[[1]][1],"/")[[1]][1]))
@@ -78,7 +81,7 @@ blank_theme <- theme_fivethirtyeight()+
 
 
 
-# Slide 1: Intro {data-background="ETfinger.jpg"}
+# Slide 1: Intro 
 
 A Peek Into the Life of the E.T.
 [Link to UFO Sightings Around the World](https://www.kaggle.com/datasets/camnugent/ufo-sightings-around-the-world)
@@ -88,18 +91,19 @@ The data is a CSV from Kaggle based on Extraterrestial Reports from 1910-2009. I
 
 
 
-# Slide 2: Problem and Questions {data-background="ETfinger.jpg"}
+# Slide 2: Problem and Questions 
 
 Where should you vacation to if you want a chance at meeting E.T?
- -Is there a country that best suits this need?
- -What time of year does E.T. prefer to travel?
- -Is there a particular time of day that E.T. leaves his house?
- -Could E.T. be among us at this very moment?
+
+ - Is there a country that best suits this need?
+ - What time of year does E.T. prefer to travel?
+ - Is there a particular time of day that E.T. leaves his house?
+ - Could E.T. be among us at this very moment?
  
 
 
 
-# Slide 3: Background/Reason for Choosing Data {data-background="ETfinger.jpg"}
+# Slide 3: Background/Reason for Choosing Data 
 
 We always hear about controversies and tinfoil hats, but we were curious how often do those from space come to visit, if at all? Is Earth a local hotspot for E.T. and his friends? Is Coachella a galaxy-wide attraction? These questions felt fun to dive into and answer.
 
@@ -118,10 +122,10 @@ The following libraries were used to manipulate our data and create graphs:
 
 
 
-
-# Slide 4: Unfiltered Data {data-background="ETfinger.jpg"}
+# Slide 4: Unfiltered Data 
 
 Here's a glimpse of our dataframe.
+
 ```{r, echo=FALSE}
 glimpse(df)
 
@@ -132,18 +136,18 @@ glimpse(df)
 
 
 
-# Slide 5: Key Terms and Column Focus {data-background="ETfinger.jpg"}
+# Slide 5: Key Terms and Column Focus 
 
--UFO Shape: Describes the Manifestation of E.T. sighting
--Country abbreviations
-**au - Australia
-**ca - Canada
-**de - Germany
-**gb - Great Britain
-**us - United States
+- UFO Shape: Describes the Manifestation of E.T. sighting
+- Country abbreviations
+  - au - Australia
+  - ca - Canada
+  - de - Germany
+  - gb - Great Britain
+  - us - United States
 
 
-# Slide 6: Overview of Data and Where {data-background="ETfinger.jpg"}
+# Slide 6: Overview of Data and Where 
 
 ```{r, echo=FALSE}
 df %>% 
@@ -158,11 +162,12 @@ df %>%
   theme(legend.position='right',legend.direction='vertical')
 
 ```
+
  - With a quick overview, we can see that most reports do not actually occur until after ~1995.
  - We believe this is most likely attributed to the lack of public, internet access before then.
 
 
-# Slide 7: Worldwide View {data-background="ETfinger.jpg"}
+# Slide 7: Worldwide View
 
 ```{r, echo=FALSE}
 countries_map <- map_data("world")
@@ -179,7 +184,7 @@ world_map + geom_point(data=df,aes(x=longitude,y=latitude),alpha=.5,size=.25) + 
  - Let's take a closer look...
 
 
-# slide 8: United States View {data-background="ETfinger.jpg"}
+# slide 8: United States View 
 
 ```{r, echo=FALSE}
 states_map <- map_data("state")
@@ -207,7 +212,7 @@ ggplot(df, aes(x=reorder(state.province, state.province, FUN=length), fill=state
   xlab("State") + ylab("Number of appearances") + ggtitle("UFO sightings by states in the USA");
 ```
 
-# Top states and Seasons {data-background="ETfinger.jpg"}
+# Top states and Seasons 
 ```{r, echo=FALSE}
 season_state_ufo <- new_ufo %>%
   mutate(
@@ -243,7 +248,7 @@ ggplot(season_state_ufo, aes(x = reorder(state, n), y = n, fill = season)) +
   theme_minimal()
 ```
 
-# slide: Day or Night {data-background="ETfinger.jpg"}
+# slide: Day or Night 
 ```{r, echo=FALSE}
 
 ca_summer_tod <- new_ufo %>%
@@ -281,9 +286,9 @@ ggplot(ca_summer_tod, aes(x = time_of_day, y = n, fill = time_of_day)) +
 ```
 
 
-# Slide 10: Additional Graphs {data-background="ETfinger.jpg"}
+# Slide 10: Additional Graphs 
 
-```{r, echo=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 df %>% group_by(hour,month_name_ordered) %>% 
   summarize(count=n()) %>% 
   ggplot(aes(x=factor(hour),y=count,color=month_name_ordered,group=month_name_ordered)) + 
@@ -312,7 +317,7 @@ ggplot(df, aes(x=reorder(UFO_shape, UFO_shape, FUN=length), fill=UFO_shape)) +
 
 
 
-# Slide 11: Duration of Encounters {data-background="ETfinger.jpg"}
+# Slide 11: Duration of Encounters 
 
 ```{r, echo=FALSE}
 df %>% filter(length_min>1e6) %>% 
@@ -330,5 +335,3 @@ shape_counts
 
 ```
   
-  
-# summary {data-background="ETfinger.jpg"}
