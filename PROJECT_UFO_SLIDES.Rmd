@@ -298,6 +298,39 @@ df %>% group_by(hour,month_name_ordered) %>%
   geom_point(color='black',size=.5,alpha=1) + 
   ggtitle('UFO Observations During the Day','Time Based on 24-hour Cycle')
 
+df %>% filter(state.province == "ca") %>% 
+  group_by(hour,month_name_ordered) %>% 
+  summarize(count=n()) %>% 
+  ggplot(aes(x=factor(hour),y=count,color=month_name_ordered,group=month_name_ordered)) + 
+  geom_line() + 
+  theme_fivethirtyeight() + 
+  scale_color_manual(name="",values=brewer.pal(12,'Paired')) + 
+  geom_point(color='black',size=.5,alpha=1) + 
+  ggtitle('UFO Observations During the Day','Time Based on 24-hour Cycle')
+
+df %>% filter(state.province == "fl") %>% 
+  group_by(hour,month_name_ordered) %>% 
+  summarize(count=n()) %>% 
+  ggplot(aes(x=factor(hour),y=count,color=month_name_ordered,group=month_name_ordered)) + 
+  geom_line() + 
+  theme_fivethirtyeight() + 
+  scale_color_manual(name="",values=brewer.pal(12,'Paired')) + 
+  geom_point(color='black',size=.5,alpha=1) + 
+  ggtitle('UFO Observations During the Day','Time Based on 24-hour Cycle')
+
+df %>% filter(state.province == "nd") %>% 
+  group_by(hour,month_name_ordered) %>% 
+  summarize(count=n()) %>% 
+  ggplot(aes(x=factor(hour),y=count,color=month_name_ordered,group=month_name_ordered)) + 
+  geom_line() + 
+  theme_fivethirtyeight() + 
+  scale_color_manual(name="",values=brewer.pal(12,'Paired')) + 
+  geom_point(color='black',size=.5,alpha=1) + 
+  ggtitle('UFO Observations During the Day','Time Based on 24-hour Cycle')
+```
+
+
+```{r}
 df %>% group_by(weekday,month_name_ordered) %>% 
   summarize(count=n()) %>% 
   ggplot(aes(x=weekday,y=count,color=month_name_ordered,group=month_name_ordered)) + 
