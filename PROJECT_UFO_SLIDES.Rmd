@@ -7,12 +7,22 @@ output:
     transition: slide      
     self_contained: false 
     center: false
+    scrollable: true  
     reveal_options:
       slideNumber: true
-      scrollable: true  
+
  
 ---
+```{css, echo=FALSE}
+.reveal .slides {
+  overflow-y: auto !important;
+}
 
+.reveal .slides section {
+  overflow-y: auto !important;
+  height: 100%;
+}
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -112,7 +122,7 @@ The following libraries were used to manipulate our data and create graphs:
 # Slide 4: Unfiltered Data {data-background="ETfinger.jpg"}
 
 Here's a glimpse of our dataframe.
-```{r}
+```{r, echo=FALSE}
 glimpse(df)
 
 ```
@@ -135,7 +145,7 @@ glimpse(df)
 
 # Slide 6: Overview of Data and Where {data-background="ETfinger.jpg"}
 
-```{r}
+```{r, echo=FALSE}
 df %>% 
   group_by(year,country) %>% 
   summarize(count=n()) %>%
@@ -154,7 +164,7 @@ df %>%
 
 # Slide 7: Worldwide View {data-background="ETfinger.jpg"}
 
-```{r}
+```{r, echo=FALSE}
 countries_map <- map_data("world")
 world_map <- ggplot() + 
   geom_map(data = countries_map, 
@@ -171,7 +181,7 @@ world_map + geom_point(data=df,aes(x=longitude,y=latitude),alpha=.5,size=.25) + 
 
 # slide 8: United States View {data-background="ETfinger.jpg"}
 
-```{r}
+```{r, echo=FALSE}
 states_map <- map_data("state")
 
 usMap <- ggplot() + 
@@ -190,7 +200,7 @@ usMap +
 
 ```
 
-```{r}
+```{r, echo=FALSE}
 ggplot(df, aes(x=reorder(state.province, state.province, FUN=length), fill=state.province)) + 
   stat_count() +
   theme_bw() + theme(axis.text.x = element_text(angle=50, size=8, hjust=1)) + 
@@ -198,7 +208,7 @@ ggplot(df, aes(x=reorder(state.province, state.province, FUN=length), fill=state
 ```
 
 # Top states and Seasons {data-background="ETfinger.jpg"}
-```{r}
+```{r, echo=FALSE}
 season_state_ufo <- new_ufo %>%
   mutate(
     date = parse_date_time(date, orders = c("mdy", "ymd", "dmy", "mdy HM", "ymd HM")),
@@ -234,7 +244,7 @@ ggplot(season_state_ufo, aes(x = reorder(state, n), y = n, fill = season)) +
 ```
 
 # slide: Day or Night {data-background="ETfinger.jpg"}
-```{r}
+```{r, echo=FALSE}
 
 ca_summer_tod <- new_ufo %>%
   mutate(
@@ -273,7 +283,7 @@ ggplot(ca_summer_tod, aes(x = time_of_day, y = n, fill = time_of_day)) +
 
 # Slide 10: Additional Graphs {data-background="ETfinger.jpg"}
 
-```{r}
+```{r, echo=FALSE}
 df %>% group_by(hour,month_name_ordered) %>% 
   summarize(count=n()) %>% 
   ggplot(aes(x=factor(hour),y=count,color=month_name_ordered,group=month_name_ordered)) + 
@@ -304,13 +314,13 @@ ggplot(df, aes(x=reorder(UFO_shape, UFO_shape, FUN=length), fill=UFO_shape)) +
 
 # Slide 11: Duration of Encounters {data-background="ETfinger.jpg"}
 
-```{r}
+```{r, echo=FALSE}
 df %>% filter(length_min>1e6) %>% 
   select(-c(length_of_encounter_seconds,DATE_2,description,year, month, day ,hour, min, month_name, month_name_ordered,state.province))
 ```
 
 some UFO shapes tend to be seen for longer durations than others?
-```{r}
+```{r, echo=FALSE}
 shape_counts <- new_ufo %>%
   count(shape, name = "n") %>%
   arrange(desc(n))
