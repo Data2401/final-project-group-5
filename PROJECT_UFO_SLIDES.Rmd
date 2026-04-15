@@ -79,10 +79,10 @@ The data is a CSV from Kaggle based on Extraterrestial Reports from 1910-????. I
 # Slide 2: Problem and Questions {data-background="ETfinger.jpg"}
 
 Where should you vacation to if you want a chance at meeting E.T?
- - Is there a country that best suits this need?
- - What time of year does E.T. prefer to travel?
- - Is there a particular time of day that E.T. leaves his house?
- - Could E.T. be among us at this very moment?
+ -Is there a country that best suits this need?
+ -What time of year does E.T. prefer to travel?
+ -Is there a particular time of day that E.T. leaves his house?
+ -Could E.T. be among us at this very moment?
  
 
 
@@ -114,13 +114,14 @@ Here's a glimpse of our dataframe.
 glimpse(df)
 ```
 
- - New columns were created to alter strings to numeric values for ease of use.
+ -New columns were created to alter strings to numeric values for ease of use.
 
 
 
 
-#Slide 5: Key Terms and Missing Data {data-background="ETfinger.jpg"}
-- summary
+#Slide 5: Key Terms and Column Focus {data-background="ETfinger.jpg"}
+
+ -
 
 
 
