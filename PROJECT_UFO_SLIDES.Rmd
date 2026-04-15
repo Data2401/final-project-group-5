@@ -1,7 +1,16 @@
 ---
 title: "WHERE CAN YOU FIND E.T.?"
 author: "Tyler Guerrero, Emanuel Padilla, Cameron Snyder"
-output: slidy_presentation
+output: 
+  revealjs::revealjs_presentation:
+    theme: black          
+    transition: slide      
+    self_contained: false 
+    center: false
+    reveal_options:
+      slideNumber: true
+      scrollable: true  
+
 ---
 
 
