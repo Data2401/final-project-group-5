@@ -3,6 +3,15 @@ title: "UFO_Data"
 author: "Tyler Guerrero, Emanuel Padilla, Cameron Snyder"
 date: "2026-04-08"
 output: html_document
+
+revealjs::revealjs_presentation:
+    theme: black          
+    transition: slide      
+    self_contained: false 
+    center: false
+    reveal_options:
+      slideNumber: true
+      scrollable: true  
 ---
 
 ## Setting up data
