@@ -185,6 +185,10 @@ usMap +
 ```
  - Our initial thought was that most reports would come out of the rural midwest.
  - It appears that might not be the case. Maybe a density plot will help us understand where the focus of reports are...
+ 
+```{r}
+
+```
 
 ```{r}
 ggplot(df, aes(x=reorder(state.province, state.province, FUN=length), fill=state.province)) + 
