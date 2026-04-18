@@ -1,17 +1,13 @@
 ---
 title: "WHERE CAN YOU FIND E.T.?"
 author: "Tyler Guerrero, Emanuel Padilla, Cameron Snyder"
-output: slidy_presentation
+output:
+  slidy_presentation:
+    css: neon.css
+    self_contained: false
+    incremental: true
 ---
 
-  revealjs::revealjs_presentation:
-    theme: black          
-    transition: slide      
-    self_contained: false 
-    center: false
-    scrollable: true  
-    reveal_options:
-      slideNumber: true
       
 ```{css, echo=FALSE}
 .reveal .slides {
@@ -81,7 +77,27 @@ blank_theme <- theme_fivethirtyeight()+
 
 
 
-# Intro 
+# Introduction
+- problem statement:
+- Approach & explanation:
+
+# Data Preparation
+- source and cleaning:
+
+# Data:
+- Display and Summary:
+
+# Exploratory Data Analysis
+- Discovery
+- plots/graphs/tables
+- explanation
+
+# Summary
+- problem and insights
+- implication and limitations
+- formatting and other requirements
+
+# Intro
 
 A Peek Into the Life of the E.T.
 [Link to UFO Sightings Around the World](https://www.kaggle.com/datasets/camnugent/ufo-sightings-around-the-world)
