@@ -204,9 +204,16 @@ glimpse(df)
 df %>% 
   group_by(year,country) %>% 
   summarize(count=n()) %>%
-  ggplot(aes(x=year,y=count,fill=country)) + 
+  ggplot(aes(x = year, y = count, fill = country)) + 
   geom_histogram(stat='identity',width=1,color='white',size=.25) + 
-  scale_fill_brewer(palette='Paired') + geom_vline(xintercept=1990,color='black') + 
+  scale_fill_brewer(palette='Paired', labels = c(
+    "Missing" = "No Origin", 
+    "au" = "Australia", 
+    "ca" = "Canada", 
+    "de" = "Germany", 
+    "gb" = "UK", 
+    "us" = "USA")) + 
+  geom_vline(xintercept=1990,color='black') + 
   annotate("text", x = 1975, y = 6000, label = "Internet Access\nto General Public",color='black') + 
   theme_fivethirtyeight() + 
   ggtitle('UFO Sightings Overview by Year and Location', 'NA, Australia, Canada, Germany, Great Britain, United States') + 
