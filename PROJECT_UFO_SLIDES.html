@@ -173,6 +173,41 @@ Tyler Guerrero, Emanuel Padilla, Cameron Snyder
 }
 </style>
 </div>
+<div id="introduction" class="slide section level1">
+<h1>Introduction</h1>
+<ul class="incremental">
+<li>problem statement:</li>
+<li>Approach &amp; explanation:</li>
+</ul>
+</div>
+<div id="data-preparation" class="slide section level1">
+<h1>Data Preparation</h1>
+<ul class="incremental">
+<li>source and cleaning:</li>
+</ul>
+</div>
+<div id="data" class="slide section level1">
+<h1>Data:</h1>
+<ul class="incremental">
+<li>Display and Summary:</li>
+</ul>
+</div>
+<div id="exploratory-data-analysis" class="slide section level1">
+<h1>Exploratory Data Analysis</h1>
+<ul class="incremental">
+<li>Discovery</li>
+<li>plots/graphs/tables</li>
+<li>explanation</li>
+</ul>
+</div>
+<div id="summary" class="slide section level1">
+<h1>Summary</h1>
+<ul class="incremental">
+<li>problem and insights</li>
+<li>implication and limitations</li>
+<li>formatting and other requirements</li>
+</ul>
+</div>
 <div id="intro" class="slide section level1">
 <h1>Intro</h1>
 <p>A Peek Into the Life of the E.T. <a
@@ -221,14 +256,14 @@ graphs: (ggplot2) (dplyr) (gridExtra) (grid) (RColorBrewer) (ggrepel)
 ## $ longitude                       &lt;dbl&gt; -97.941111, -98.581082, -2.916667, -96…
 ## $ year                            &lt;dbl&gt; 1949, 1949, 1955, 1956, 1960, 1961, 19…
 ## $ month                           &lt;dbl&gt; 10, 10, 10, 10, 10, 10, 10, 10, 10, 10…
-## $ day                             &lt;dbl&gt; 10, 10, 10, 10, 10, 10, 10, 10, 10, 10…
-## $ hour                            &lt;dbl&gt; 20, 21, 17, 21, 20, 19, 21, 23, 20, 21…
-## $ min                             &lt;dbl&gt; 30, 0, 0, 0, 0, 0, 0, 45, 0, 0, 0, 0, …
-## $ month_name                      &lt;chr&gt; &quot;October&quot;, &quot;October&quot;, &quot;October&quot;, &quot;Octo…
-## $ month_name_ordered              &lt;fct&gt; October, October, October, October, Oc…
-## $ DATE                            &lt;chr&gt; &quot;10/10/1949&quot;, &quot;10/10/1949&quot;, &quot;10/10/195…
+## $ day                             &lt;int&gt; 10, 10, 10, 10, 10, 10, 10, 10, 10, 10…
+## $ hour                            &lt;int&gt; 20, 21, 17, 21, 20, 19, 21, 23, 20, 21…
+## $ min                             &lt;int&gt; 30, 0, 0, 0, 0, 0, 0, 45, 0, 0, 0, 0, …
+## $ month_name                      &lt;dbl&gt; 10, 10, 10, 10, 10, 10, 10, 10, 10, 10…
+## $ month_name_ordered              &lt;fct&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ DATE                            &lt;date&gt; 1949-10-10, 1949-10-10, 1955-10-10, 1…
 ## $ DATE_2                          &lt;date&gt; 1949-10-10, 1949-10-10, 1955-10-10, 1…
-## $ weekday                         &lt;fct&gt; Mon, Mon, Mon, Wed, Mon, Tue, Sun, Sun…
+## $ weekday                         &lt;ord&gt; Mon, Mon, Mon, Wed, Mon, Tue, Sun, Sun…
 ## $ length_min                      &lt;dbl&gt; 45.0000000, 120.0000000, 0.3333333, 0.…</code></pre>
 <p>-New columns were created to alter strings to numeric values for ease
 of use.</p>
@@ -298,11 +333,13 @@ will help us understand where the focus of reports are…</p>
 <span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&#39;UFO Observations During the Week&#39;</span>)</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by &#39;weekday&#39;. You can override using the
 ## `.groups` argument.</code></pre>
+<pre><code>## Warning: Removed 7 rows containing missing values or values outside the scale range
+## (`geom_line()`).</code></pre>
 <p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-11-1.png" alt="" width="768" /></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(UFO_shape, UFO_shape, <span class="at">FUN=</span>length), <span class="at">fill=</span>UFO_shape)) <span class="sc">+</span> </span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">show.legend=</span>F) <span class="sc">+</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;UFO Shape&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Number of Appearances&quot;</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;UFO Shapes Seen Worldwide&quot;</span>);</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(UFO_shape, UFO_shape, <span class="at">FUN=</span>length), <span class="at">fill=</span>UFO_shape)) <span class="sc">+</span> </span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">show.legend=</span>F) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;UFO Shape&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Number of Appearances&quot;</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;UFO Shapes Seen Worldwide&quot;</span>);</span></code></pre></div>
 <p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-11-2.png" alt="" width="768" /></p>
 </div>
 <div id="duration-of-encounters" class="slide section level1">
@@ -311,14 +348,14 @@ will help us understand where the focus of reports are…</p>
 ## 1 10/1/1983 17:00 birmingham (uk/england)      gb    sphere
 ## 2  6/3/2010 23:30         ottawa (canada)      ca     other
 ## 3 9/15/1991 18:00              greenbrier      us     light
-##   described_duration_of_encounter date_documented latitude  longitude      DATE
-## 1                        31 years       4/12/2013 52.46667  -1.916667 10/1/1983
-## 2                        23000hrs        7/6/2010 45.41667 -75.700000  6/3/2010
-## 3                        21 years       3/31/2008 35.23389 -92.387500 9/15/1991
-##   weekday length_min
-## 1     Sat    1630600
-## 2     Thu    1380000
-## 3     Sun    1104600</code></pre>
+##   described_duration_of_encounter date_documented latitude  longitude
+## 1                        31 years       4/12/2013 52.46667  -1.916667
+## 2                        23000hrs        7/6/2010 45.41667 -75.700000
+## 3                        21 years       3/31/2008 35.23389 -92.387500
+##         DATE weekday length_min
+## 1 1983-10-01     Sat    1630600
+## 2 2010-06-03     Thu    1380000
+## 3 1991-09-15     Sun    1104600</code></pre>
 <p>some UFO shapes tend to be seen for longer durations than others?</p>
 <pre><code>##        shape     n
 ## 1      light 14978
