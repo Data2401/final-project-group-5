@@ -173,6 +173,87 @@ Tyler Guerrero, Emanuel Padilla, Cameron Snyder
 }
 </style>
 </div>
+<div id="introduction" class="slide section level1">
+<h1>Introduction</h1>
+<ul class="incremental">
+<li><p>INTRODUCTION:</p></li>
+<li><p>Is it a bird, is it a plane…Superman? If you can’t name it, it
+might just be an unidentified flying object. Have you ever stopped to
+wonder why we’re so fascinated by UFOs in the first place? As humans,
+we’re wired for curiosity and love turning mysteries into stories,
+theories, and yes—full‑on tinfoil‑hat conspiracies. It’s time to lean
+into that curiosity and actually investigate. What are these UFOs? Is
+E.T. and his friends real? Are they just making a pit stop on good old
+oil‑rich Earth for a quick refuel? The real challenge is figuring out
+where these crafts tend to show up so we have the best shot at actually
+interacting with them. After all, who wouldn’t want to hitch a ride
+across the universe with E.T. and hear all the cosmic secrets?</p></li>
+<li><p>In this analysis, we’ll hunt for potential UFO “hotspots” on
+Earth—places where sightings cluster—so you could, in theory, grab some
+friends, camp out, and go UFO‑watching in high‑probability zones. Our
+main UFO dataset contains descriptive witness reports dating back to
+1910, obtained from Kaggle and originally compiled by the National UFO
+Reporting Center. We also incorporate an additional UFO dataset;
+together, these sources (ufo1 and ufo2) give us a richer foundation for
+exploring where and when unexplained sightings light up our
+sky.</p></li>
+<li><p>QUESTIONS TO ANSWER:</p></li>
+<li><p>Where should you vacation to if you want a chance at meeting
+E.T?</p>
+<ul class="incremental">
+<li>Is there a country that best suits this need?</li>
+<li>What time of year does E.T. prefer to travel?</li>
+<li>Is there a particular time of day that E.T. leaves his house?</li>
+<li>Could E.T. be among us at this very moment?</li>
+</ul></li>
+<li><p>TOOLS USED:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#Data Manipulation:</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># Used for data wrangling</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># Used to analyze data </span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(lubridate) <span class="co"># Used to manipulate time format</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#Data Visualization &amp; Aesthetics:</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># Used for plotting</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="fu">library</span>(ggridges) <span class="co"># Used for ridge plots</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer) <span class="co"># Used for color palettes</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="fu">library</span>(viridis) <span class="co"># Used for colorblind-safe palettes</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="fu">library</span>(ggrepel) <span class="co">#Used for non-overlapping labels</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="fu">library</span>(ggthemes) <span class="co"># Used for custom themes</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="fu">library</span>(grid) <span class="co"># Used for low-level layout</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="fu">library</span>(gridExtra) <span class="co"># Used for arranging plots</span></span></code></pre></div></li>
+</ul>
+</div>
+<div id="data-preparation" class="slide section level1">
+<h1>Data Preparation</h1>
+<ul class="incremental">
+<li>source and cleaning:</li>
+</ul>
+</div>
+<div id="data" class="slide section level1">
+<h1>Data:</h1>
+<ul class="incremental">
+<li>Display and Summary:</li>
+</ul>
+</div>
+<div id="exploratory-data-analysis" class="slide section level1">
+<h1>Exploratory Data Analysis</h1>
+<ul class="incremental">
+<li>Discovery</li>
+<li>plots/graphs/tables</li>
+<li>explanation</li>
+</ul>
+</div>
+<div id="summary" class="slide section level1">
+<h1>Summary</h1>
+<ul class="incremental">
+<li>problem and insights</li>
+<li>implication and limitations</li>
+<li>formatting and other requirements</li>
+</ul>
+</div>
 <div id="intro" class="slide section level1">
 <h1>Intro</h1>
 <p>A Peek Into the Life of the E.T. <a
@@ -251,7 +332,7 @@ of use.</p>
 <h1>Overview of Data and Where</h1>
 <pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
 ## `.groups` argument.</code></pre>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-3-1.png" alt="" width="768" /></p>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-4-1.png" alt="" width="768" /></p>
 <ul class="incremental">
 <li>With a quick overview, we can see that most reports do not actually
 occur until after ~1995.</li>
@@ -261,7 +342,7 @@ internet access before then.</li>
 </div>
 <div id="worldwide-view" class="slide section level1">
 <h1>Worldwide View</h1>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-4-1.png" alt="" width="768" /></p>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-5-1.png" alt="" width="768" /></p>
 <ul class="incremental">
 <li>Here is a broader-scope view of reports around the world.</li>
 <li>As we can see, there appears to be a conglomerate of reports focused
@@ -271,39 +352,39 @@ in the United States.</li>
 </div>
 <div id="united-states-view" class="slide section level1">
 <h1>United States View</h1>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-5-1.png" alt="" width="768" />
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-6-1.png" alt="" width="768" />
 - Our initial thought was that most reports would come out of the rural
 midwest. - It appears that might not be the case. Maybe a density plot
 will help us understand where the focus of reports are…</p>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-7-1.png" alt="" width="768" /></p>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-8-1.png" alt="" width="768" /></p>
 </div>
 <div id="top-states-and-seasons" class="slide section level1">
 <h1>Top states and Seasons</h1>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-8-1.png" alt="" width="768" /></p>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-9-1.png" alt="" width="768" /></p>
 </div>
 <div id="day-or-night" class="slide section level1">
 <h1>Day or Night</h1>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-9-1.png" alt="" width="768" /></p>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-10-1.png" alt="" width="768" /></p>
 </div>
 <div id="additional-graphs" class="slide section level1">
 <h1>Additional Graphs</h1>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-10-1.png" alt="" width="768" /><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-10-2.png" alt="" width="768" /><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-10-3.png" alt="" width="768" /><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-10-4.png" alt="" width="768" /></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(weekday,month_name_ordered) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count=</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>weekday,<span class="at">y=</span>count,<span class="at">color=</span>month_name_ordered,<span class="at">group=</span>month_name_ordered)) <span class="sc">+</span> </span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="fu">theme_fivethirtyeight</span>() <span class="sc">+</span> </span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">name=</span><span class="st">&quot;&quot;</span>,<span class="at">palette=</span><span class="st">&#39;Paired&#39;</span>) <span class="sc">+</span> </span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&#39;black&#39;</span>,<span class="at">size=</span>.<span class="dv">5</span>,<span class="at">alpha=</span><span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&#39;UFO Observations During the Week&#39;</span>)</span></code></pre></div>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-11-1.png" alt="" width="768" /><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-11-2.png" alt="" width="768" /><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-11-3.png" alt="" width="768" /><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-11-4.png" alt="" width="768" /></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(weekday,month_name_ordered) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count=</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>weekday,<span class="at">y=</span>count,<span class="at">color=</span>month_name_ordered,<span class="at">group=</span>month_name_ordered)) <span class="sc">+</span> </span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  <span class="fu">theme_fivethirtyeight</span>() <span class="sc">+</span> </span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">name=</span><span class="st">&quot;&quot;</span>,<span class="at">palette=</span><span class="st">&#39;Paired&#39;</span>) <span class="sc">+</span> </span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&#39;black&#39;</span>,<span class="at">size=</span>.<span class="dv">5</span>,<span class="at">alpha=</span><span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&#39;UFO Observations During the Week&#39;</span>)</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by &#39;weekday&#39;. You can override using the
 ## `.groups` argument.</code></pre>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-11-1.png" alt="" width="768" /></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(UFO_shape, UFO_shape, <span class="at">FUN=</span>length), <span class="at">fill=</span>UFO_shape)) <span class="sc">+</span> </span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">show.legend=</span>F) <span class="sc">+</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;UFO Shape&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Number of Appearances&quot;</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;UFO Shapes Seen Worldwide&quot;</span>);</span></code></pre></div>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-11-2.png" alt="" width="768" /></p>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-12-1.png" alt="" width="768" /></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(UFO_shape, UFO_shape, <span class="at">FUN=</span>length), <span class="at">fill=</span>UFO_shape)) <span class="sc">+</span> </span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">show.legend=</span>F) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;UFO Shape&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Number of Appearances&quot;</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;UFO Shapes Seen Worldwide&quot;</span>);</span></code></pre></div>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-12-2.png" alt="" width="768" /></p>
 </div>
 <div id="duration-of-encounters" class="slide section level1">
 <h1>Duration of Encounters</h1>
