@@ -44,7 +44,14 @@ new_ufo <- ufo_data %>% select("datetime", "city", "state", "country", "shape", 
   separate(col=datetime, into = c("date", "time"), sep = " ")
 
 # Adding new data set and changing strings to numeric values for data manipulation
-df <- read.csv('ufo_sighting_data.csv',sep=',',stringsAsFactors=F)
+ufo_sighting_data <- read.csv('ufo_sighting_data.csv',sep=',',stringsAsFactors=F)
+df <- ufo_sighting_data %>%
+  mutate(country = case_when(
+    is.na(country) ~ "none",
+    country == ""  ~ "none",
+    TRUE ~ country
+  ))
+
 df$latitude <- as.numeric(df$latitude)
 
 dt <- mdy_hm(df$Date_time)
@@ -207,7 +214,7 @@ df %>%
   ggplot(aes(x = year, y = count, fill = country)) + 
   geom_histogram(stat='identity',width=1,color='white',size=.25) + 
   scale_fill_brewer(palette='Paired', labels = c(
-    "Missing" = "No Origin", 
+    "none" = "No Origin", 
     "au" = "Australia", 
     "ca" = "Canada", 
     "de" = "Germany", 
