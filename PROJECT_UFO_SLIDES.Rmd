@@ -83,9 +83,39 @@ blank_theme <- theme_fivethirtyeight()+
 
 
 # Introduction
-- problem statement:
-- Approach & explanation:
+- INTRODUCTION:
+- Is it a bird, is it a plane…Superman? If you can’t name it, it might just be an unidentified flying object. Have you ever stopped to wonder why we’re so fascinated by UFOs in the first place? As humans, we’re wired for curiosity and love turning mysteries into stories, theories, and yes—full‑on tinfoil‑hat conspiracies. It’s time to lean into that curiosity and actually investigate. What are these UFOs? Is E.T. and his friends real? Are they just making a pit stop on good old oil‑rich Earth for a quick refuel? The real challenge is figuring out where these crafts tend to show up so we have the best shot at actually interacting with them. After all, who wouldn’t want to hitch a ride across the universe with E.T. and hear all the cosmic secrets?
 
+- In this analysis, we’ll hunt for potential UFO “hotspots” on Earth—places where sightings cluster—so you could, in theory, grab some friends, camp out, and go UFO‑watching in high‑probability zones. Our main UFO dataset contains descriptive witness reports dating back to 1910, obtained from Kaggle and originally compiled by the National UFO Reporting Center. We also incorporate an additional UFO dataset; together, these sources (ufo1 and ufo2) give us a richer foundation for exploring where and when unexplained sightings light up our sky.
+
+- QUESTIONS TO ANSWER:
+- Where should you vacation to if you want a chance at meeting E.T?
+  - Is there a country that best suits this need?
+  - What time of year does E.T. prefer to travel?
+  - Is there a particular time of day that E.T. leaves his house?
+  - Could E.T. be among us at this very moment?
+
+- TOOLS USED:
+  ```{r}
+  #Data Manipulation:
+  
+  library(dplyr) # Used for data wrangling
+  library(tidyverse) # Used to analyze data 
+  library(lubridate) # Used to manipulate time format
+  
+  #Data Visualization & Aesthetics:
+  
+  library(ggplot2) # Used for plotting
+  library(ggridges) # Used for ridge plots
+  library(RColorBrewer) # Used for color palettes
+  library(viridis) # Used for colorblind-safe palettes
+  library(ggrepel) #Used for non-overlapping labels
+  library(ggthemes) # Used for custom themes
+  library(grid) # Used for low-level layout
+  library(gridExtra) # Used for arranging plots
+  
+  ```
+  
 # Data Preparation
 - source and cleaning:
 
