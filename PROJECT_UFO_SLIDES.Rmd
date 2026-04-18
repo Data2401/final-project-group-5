@@ -84,7 +84,6 @@ blank_theme <- theme_fivethirtyeight()+
   axis.ticks = element_blank(),
   plot.title=element_text(size=14, face="bold")
   )
-
 ```
 
 
@@ -275,6 +274,18 @@ world_map <- ggplot() +
            fill = "white", color = "green", size = 0.1)
 
 world_map + geom_point(data=df,aes(x=longitude,y=latitude),alpha=.5,size=.25) + theme_fivethirtyeight() + ggtitle('Locations of UFO Sightings')
+
+world_map +
+  geom_density_2d_filled(
+    data = df,
+    aes(x = longitude, y = latitude),
+    alpha = 0.6,
+    contour_var = "ndensity"
+  ) +
+  coord_quickmap() +
+  scale_fill_viridis_d(name = "Density") +
+  theme_fivethirtyeight() +
+  ggtitle("Density of UFO Sightings")
 ```
 
  - Here is a broader-scope view of reports around the world.
@@ -295,12 +306,24 @@ usMap +
   geom_point(data=filter(df,country=='us' & state.province!='hi' & state.province!='ak' & state.province!='pr'),aes(x=longitude,y=latitude),alpha=.75,size=.5) + 
   ggtitle('Location of UFO Sightings in the US')
 
+
 ```
  - Our initial thought was that most reports would come out of the rural midwest.
  - It appears that might not be the case. Maybe a density plot will help us understand where the focus of reports are...
  
 ```{r warning=FALSE}
-
+usMap + 
+  geom_density_2d_filled(
+    data = df %>% 
+      filter(country == 'us',
+             !state.province %in% c('hi','ak','pr'),
+             !is.na(longitude), !is.na(latitude)),
+    aes(x = longitude, y = latitude),
+    alpha = 0.7,
+    contour_var = "ndensity"
+  ) +
+  scale_fill_viridis_d(name = "Density") +
+  ggtitle("Density of UFO Sightings in the US")
 ```
 
 ```{r echo=FALSE, warning=FALSE}
