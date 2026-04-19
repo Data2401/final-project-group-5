@@ -445,7 +445,7 @@ df %>%
   labs(color = "Season")
 ```
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 df %>%
   filter(
     country == "us",
@@ -479,7 +479,7 @@ df %>%
   scale_color_brewer(palette = "Set2")
 ```
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 df %>%
   filter(country == "us", !is.na(DATE_2)) %>%
   mutate(
@@ -513,14 +513,52 @@ df %>%
   xlab("Day of Week") +
   ylab("Number of Sightings") +
   ggtitle("UFO Sightings by Day of Week (Selected States)")
+```
 
+```{r}
 ggplot(df, aes(x=reorder(UFO_shape, UFO_shape, FUN=length), fill=UFO_shape)) + 
   geom_bar(show.legend=F) +
   coord_flip() +
   theme_bw() + xlab("UFO Shape") + ylab("Number of Appearances") + ggtitle("UFO Shapes Seen Worldwide");
 
+df %>%
+  filter(country == "us") %>%
+  count(UFO_shape, sort = TRUE) %>%
+  slice_head(n = 10) %>%
+  pull(UFO_shape)
+
+top_shapes <- df %>%
+  filter(country == "us", !is.na(UFO_shape), UFO_shape != "") %>%
+  count(UFO_shape, sort = TRUE) %>%
+  slice_head(n = 10) %>%
+  pull(UFO_shape)
+
+df %>%
+  filter(
+    country == "us",
+    UFO_shape %in% top_shapes,
+    !is.na(hour)
+  ) %>%
+  ggplot(aes(
+    x = reorder(UFO_shape, hour, FUN = median),
+    y = hour
+  )) +
+  geom_boxplot(fill = "steelblue", outlier.alpha = 0.3) +
+  coord_flip() +
+  scale_y_continuous(breaks = 0:23) +
+  theme_bw() +
+  xlab("UFO Shape (Top 10 Most Common)") +
+  ylab("Hour of Day (0–23)") +
+  ggtitle("Do UFO Shapes Appear at Different Times of Day? (US)")
 ```
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+df %>%
+  filter(!is.na(UFO_shape), UFO_shape != "") %>%
+  count(UFO_shape, sort = TRUE) %>%
+  slice_head(n = 10)
+
+```
 
 
 
