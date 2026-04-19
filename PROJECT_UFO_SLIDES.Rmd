@@ -327,10 +327,22 @@ usMap +
 ```
 
 ```{r echo=FALSE, warning=FALSE}
-ggplot(df, aes(x=reorder(state.province, state.province, FUN=length), fill=state.province)) + 
-  stat_count() +
-  theme_bw() + theme(axis.text.x = element_text(angle=50, size=8, hjust=1)) + 
-  xlab("State") + ylab("Number of appearances") + ggtitle("UFO sightings by states in the USA");
+df %>%
+  filter(!is.na(state.province)) %>%   # remove NA upfront
+  count(state.province, sort = TRUE) %>%
+  slice_head(n = 6) %>%
+  mutate(state_full = state.name[match(toupper(state.province), state.abb)]) %>%
+  filter(!is.na(state_full)) %>%       # safeguard: drop anything not matched
+  ggplot(aes(x = reorder(state_full, n), y = n, fill = state_full)) +
+  geom_col() +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(angle = 50, size = 9, hjust = 1),
+    legend.position = "none"
+  ) +
+  xlab("State") +
+  ylab("Number of Reports") +
+  ggtitle("Top 5 States for UFO Sightings in the USA")
 ```
 
 # Top states and Seasons 
@@ -410,56 +422,97 @@ ggplot(ca_summer_tod, aes(x = time_of_day, y = n, fill = time_of_day)) +
 # Additional Graphs 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-df %>% group_by(hour,month_name_ordered) %>% 
-  summarize(count=n()) %>% 
-  ggplot(aes(x=factor(hour),y=count,color=month_name_ordered,group=month_name_ordered)) + 
-  geom_line() + 
-  theme_fivethirtyeight() + 
-  scale_color_manual(name="",values=brewer.pal(12,'Paired')) + 
-  geom_point(color='black',size=.5,alpha=1) + 
-  ggtitle('UFO Observations During the Day','Time Based on 24-hour Cycle')
-
-df %>% filter(state.province == "ca") %>% 
-  group_by(hour,month_name_ordered) %>% 
-  summarize(count=n()) %>% 
-  ggplot(aes(x=factor(hour),y=count,color=month_name_ordered,group=month_name_ordered)) + 
-  geom_line() + 
-  theme_fivethirtyeight() + 
-  scale_color_manual(name="",values=brewer.pal(12,'Paired')) + 
-  geom_point(color='black',size=.5,alpha=1) + 
-  ggtitle('UFO Observations During the Day','Time Based on 24-hour Cycle')
-
-df %>% filter(state.province == "fl") %>% 
-  group_by(hour,month_name_ordered) %>% 
-  summarize(count=n()) %>% 
-  ggplot(aes(x=factor(hour),y=count,color=month_name_ordered,group=month_name_ordered)) + 
-  geom_line() + 
-  theme_fivethirtyeight() + 
-  scale_color_manual(name="",values=brewer.pal(12,'Paired')) + 
-  geom_point(color='black',size=.5,alpha=1) + 
-  ggtitle('UFO Observations During the Day','Time Based on 24-hour Cycle')
-
-df %>% filter(state.province == "nd") %>% 
-  group_by(hour,month_name_ordered) %>% 
-  summarize(count=n()) %>% 
-  ggplot(aes(x=factor(hour),y=count,color=month_name_ordered,group=month_name_ordered)) + 
-  geom_line() + 
-  theme_fivethirtyeight() + 
-  scale_color_manual(name="",values=brewer.pal(12,'Paired')) + 
-  geom_point(color='black',size=.5,alpha=1) + 
-  ggtitle('UFO Observations During the Day','Time Based on 24-hour Cycle')
+df %>%
+  filter(country == "us", !is.na(hour), !is.na(month)) %>%
+  mutate(
+    season = case_when(
+      month %in% c(12, 1, 2)  ~ "Winter",
+      month %in% c(3, 4, 5)   ~ "Spring",
+      month %in% c(6, 7, 8)   ~ "Summer",
+      month %in% c(9, 10, 11) ~ "Fall"
+    )
+  ) %>%
+  mutate(season = factor(season, levels = c("Winter","Spring","Summer","Fall"))) %>% 
+  count(hour, season) %>%
+  ggplot(aes(x = hour, y = n, color = season)) +
+  geom_line(size = 1) +
+  geom_point(size = 1.5) +
+  scale_x_continuous(breaks = 0:23) +
+  theme_bw() +
+  xlab("Hour of Day") +
+  ylab("Number of Sightings") +
+  ggtitle("UFO Sightings by Time of Day (US) Across Seasons") +
+  labs(color = "Season")
 ```
 
+```{r}
+df %>%
+  filter(
+    country == "us",
+    state.province %in% c("ca", "ny", "fl", "wa"),
+    !is.na(hour),
+    !is.na(month)
+  ) %>%
+  mutate(
+    state = toupper(state.province),
+    season = case_when(
+      month %in% c(12, 1, 2)  ~ "Winter",
+      month %in% c(3, 4, 5)   ~ "Spring",
+      month %in% c(6, 7, 8)   ~ "Summer",
+      month %in% c(9, 10, 11) ~ "Fall"
+    ),
+    season = factor(season, levels = c("Winter","Spring","Summer","Fall"))
+  ) %>%
+  count(state, hour, season) %>%
+  ggplot(aes(x = hour, y = n, color = season)) +
+  geom_line(size = 1) +
+  scale_x_continuous(breaks = seq(0, 23, by = 4)) +
+  facet_wrap(~state, ncol = 2) +
+  theme_bw() +
+  labs(
+    x = "Hour of Day",
+    y = "Number of Sightings",
+    color = "Season",
+    title = "UFO Sightings by Time of Day Across Seasons",
+    subtitle = "California, New York, Florida, Washington"
+  ) +
+  scale_color_brewer(palette = "Set2")
+```
 
 ```{r}
-df %>% group_by(weekday,month_name_ordered) %>% 
-  summarize(count=n()) %>% 
-  ggplot(aes(x=weekday,y=count,color=month_name_ordered,group=month_name_ordered)) + 
-  geom_line() + 
-  theme_fivethirtyeight() + 
-  scale_color_brewer(name="",palette='Paired') + 
-  geom_point(color='black',size=.5,alpha=1) + 
-  ggtitle('UFO Observations During the Week')
+df %>%
+  filter(country == "us", !is.na(DATE_2)) %>%
+  mutate(
+    weekday = wday(DATE_2, label = TRUE, abbr = TRUE, week_start = 1)
+  ) %>%
+  count(weekday) %>%
+  ggplot(aes(x = weekday, y = n, group = 1)) +
+  geom_line(color = "steelblue", size = 1) +
+  geom_point(color = "steelblue", size = 2) +
+  theme_bw() +
+  xlab("Day of Week") +
+  ylab("Number of Sightings") +
+  ggtitle("UFO Sightings by Day of Week (United States)")
+
+df %>%
+  filter(
+    country == "us",
+    state.province %in% c("ca", "ny", "fl", "wa"),
+    !is.na(DATE_2)
+  ) %>%
+  mutate(
+    state = toupper(state.province),
+    weekday = wday(DATE_2, label = TRUE, abbr = TRUE, week_start = 1)
+  ) %>%
+  count(state, weekday) %>%
+  ggplot(aes(x = weekday, y = n, group = state)) +
+  geom_line(color = "darkred", size = 1) +
+  geom_point(size = 1.5) +
+  facet_wrap(~state, ncol = 2) +
+  theme_bw() +
+  xlab("Day of Week") +
+  ylab("Number of Sightings") +
+  ggtitle("UFO Sightings by Day of Week (Selected States)")
 
 ggplot(df, aes(x=reorder(UFO_shape, UFO_shape, FUN=length), fill=UFO_shape)) + 
   geom_bar(show.legend=F) +
