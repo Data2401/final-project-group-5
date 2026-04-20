@@ -97,7 +97,10 @@ blank_theme <- theme_fivethirtyeight()+
 
  - In this analysis, we’ll hunt for potential UFO “hotspots” on Earth—places where sightings cluster—so you could, in theory, grab some friends, camp out, and go UFO‑watching in high‑probability zones. 
  
- [IMAGE HERE]
+ 
+```{r, echo=FALSE, fig.align='center', out.width='60%'}
+knitr::include_graphics("ufo_1.webp")
+```
 
 
 # The questions that we seek answers for:
@@ -278,7 +281,9 @@ df %>%
 
 # Coachella, maybe?
 
- [E.T. Wig Image]
+```{r, echo=FALSE, fig.align='center', out.width='60%'}
+knitr::include_graphics("ETwig.webp")
+```
 
 
 # So Far...
@@ -524,11 +529,22 @@ ggplot(df, aes(x=reorder(UFO_shape, UFO_shape, FUN=length), fill=UFO_shape)) +
  
  
 # Here are some examples:
+```{r, echo=FALSE, fig.align='center', out.width='60%'}
+knitr::include_graphics("ufolight1.png")
+```
 
- [Image of Light]
- [Image of Triangle]
- [Image of Circle]
- [Image of Fireball]
+```{r, echo=FALSE, fig.align='center', out.width='60%'}
+knitr::include_graphics("ufolight.webp")
+```
+
+```{r, echo=FALSE, fig.align='center', out.width='60%'}
+knitr::include_graphics("ufo_1.webp")
+```
+
+```{r, echo=FALSE, fig.align='center', out.width='60%'}
+knitr::include_graphics("ufo_fireball.webp")
+```
+
  
  
 # Okay, maybe there is some correlation between the time of day and what shape tends to appear... 
@@ -628,5 +644,7 @@ shape_summary
   
 # To infinity...
 
- [Closing Image]
+```{r, echo=FALSE, fig.align='center', out.width='60%'}
+knitr::include_graphics("ufo_rave.png")
+```
   
