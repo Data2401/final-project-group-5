@@ -1,5 +1,5 @@
 ---
-title: "WHERE CAN YOU FIND E.T.?"
+title: "A Peek Into the Life of E.T.?"
 author: "Tyler Guerrero, Emanuel Padilla, Cameron Snyder"
 output:
   slidy_presentation:
@@ -86,97 +86,56 @@ blank_theme <- theme_fivethirtyeight()+
   )
 ```
 
+# Greetings, Traveler
+
+ - The data used is a CSV from Kaggle based on Extraterrestial Reports from 1910-2009. It shows location, time, shapes of the extraterrestial, and brief descriptions of the event.
+ 
+[Link to UFO Sightings Around the World](https://www.kaggle.com/datasets/camnugent/ufo-sightings-around-the-world)
 
 
-# Introduction
-- INTRODUCTION:
-- Is it a bird, is it a plane…Superman? If you can’t name it, it might just be an unidentified flying object. Have you ever stopped to wonder why we’re so fascinated by UFOs in the first place? As humans, we’re wired for curiosity and love turning mysteries into stories, theories, and yes—full‑on tinfoil‑hat conspiracies. It’s time to lean into that curiosity and actually investigate. What are these UFOs? Is E.T. and his friends real? Are they just making a pit stop on good old oil‑rich Earth for a quick refuel? The real challenge is figuring out where these crafts tend to show up so we have the best shot at actually interacting with them. After all, who wouldn’t want to hitch a ride across the universe with E.T. and hear all the cosmic secrets?
+# Is it a bird? Is it a plane? Superman?
 
-- In this analysis, we’ll hunt for potential UFO “hotspots” on Earth—places where sightings cluster—so you could, in theory, grab some friends, camp out, and go UFO‑watching in high‑probability zones. 
+ - In this analysis, we’ll hunt for potential UFO “hotspots” on Earth—places where sightings cluster—so you could, in theory, grab some friends, camp out, and go UFO‑watching in high‑probability zones. 
+ 
+ [IMAGE HERE]
 
-- TOOLS USED:
-  ```{r}
-  #Data Manipulation:
+
+## The questions that we seek answers for:
+
+ - Where should you vacation to if you want a chance at meeting E.T?
+ - Is there a country that best suits this need?
+ - What time of year does E.T. prefer to travel?
+ - Is there a particular time of day that E.T. leaves his house?
+ - Could E.T. be among us at this very moment?
+
+
+# TOOLS USED:
+
+  - Data Manipulation:
+  -- deplyr, tidyverse, and lubridate were used to clean up our data by converting strings to numeric values, as well as allowing us to manipulate the data to find answers.
   
-  library(dplyr) # Used for data wrangling
-  library(tidyverse) # Used to analyze data 
-  library(lubridate) # Used to manipulate time format
-  
-  #Data Visualization & Aesthetics:
-  
-  library(ggplot2) # Used for plotting
-  library(ggridges) # Used for ridge plots
-  library(RColorBrewer) # Used for color palettes
-  library(viridis) # Used for colorblind-safe palettes
-  library(ggrepel) #Used for non-overlapping labels
-  library(ggthemes) # Used for custom themes
-  library(grid) # Used for low-level layout
-  library(gridExtra) # Used for arranging plots
-  
-  ```
-  
-  
-# About the Dataset 
-The Datasets used in this analysis come from two sources:
+  - Data Visualization & Aesthetics:
+  -- ggplot2, ggridges, RColorBrewer, viridis, ggrepel, ggthemes, grid, gridExtra all helped us to make our presentation a little nicer looking.
 
 
-- QUESTIONS TO ANSWER:
-- Where should you vacation to if you want a chance at meeting E.T?
-  - Is there a country that best suits this need?
-  - What time of year does E.T. prefer to travel?
-  - Is there a particular time of day that E.T. leaves his house?
-  - Could E.T. be among us at this very moment?
+# Is There a Reason We Should Care?
 
-# Data Preparation
-- source and cleaning:
-- For this analysis we will be using two datasets with similar variables.
+ - Aliens are cool!
+ - Wouldn't you like to find out the best vacation locale to meet up with some?
+ - Also, where are these reports even originating from? Maybe you don't want to risk being abducted!
+ 
 
-Dataset 1:
+# Here is a brief glimpse of our data:
 
-- this data set was sourced from the National UFO Reporting Center (NUFORC), accessed via Kaggle.
-- Each row is a reporting sightingv(observation)
-- With variables:
-  datetime,  
-  city, 
-  state, 
-  country, 
-  shape, 
-  duration in seconds, 
-  duration in hours and minutes, 
-  comments, 
-  date posted, 
-  latitude, and 
-  lonitude. 
-- The dataset cover reports from 1910-2014, predominatly from the United States. 
-- Majority of self-reports are submitted online. 
-  ```{r}
-  
-  ```
-  
-- Useful for patterns over time and location, but because of self-reports theres misclassification and median driven spikes. 
 ```{r}
 glimpse(ufo_data)
 ```
 
-# Data:
-- Display and Summary:
 
-# Exploratory Data Analysis
-- Discovery
-- plots/graphs/tables
-- explanation
 
-# Summary
-- problem and insights
-- implication and limitations
-- formatting and other requirements
 
-# Intro
 
-A Peek Into the Life of the E.T.
-[Link to UFO Sightings Around the World](https://www.kaggle.com/datasets/camnugent/ufo-sightings-around-the-world)
 
-The data is a CSV from Kaggle based on Extraterrestial Reports from 1910-2009. It shows location, time, shapes of the extraterrestial, and brief descriptions of the event.
 
 
 
