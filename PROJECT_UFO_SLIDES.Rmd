@@ -456,10 +456,10 @@ df %>%
 
  - Okay, so we have the U.S.
  - We know E.T. is a fan of Texas, Cali, Florida, New York, and Washington...
-  - The most populated states?
+   - The most populated states?
  - E.T. HATES the cold weather. Perhaps that's why the southern states are among the highest in reports.
  - They also love to come out during the weekend.
-  - Especially Saturday!
+   - Especially Saturday!
   
 
 # Okay, so...
@@ -620,10 +620,10 @@ shape_summary
 
  - Make sure you book your trip for the summertime.
  - Your best bet is going to be in Texas, Florida, New York, Washington, or California...
-  - We're betting on California, though.
+   - We're betting on California, though.
  - E.T. must not know about suntan lotion, so plan to pull an all-nighter over the weekend.
  - And lastly, keep an eye out for abnormal lights!
-  - Maybe E.T. is into the California rave scene...
+   - Maybe E.T. is into the California rave scene...
   
   
 # To infinity...
