@@ -499,6 +499,7 @@ ggplot(ca_summer_tod, aes(x = time_of_day, y = n, fill = time_of_day)) +
   )) +
   labs(
     title = "UFO Sightings by Time of Day in California (Summer)",
+    subtitle = "Daytime is from 6AM to 8PM",
     x = "Time of Day",
     y= "Number of Sightings"
   ) +
@@ -508,26 +509,31 @@ ggplot(ca_summer_tod, aes(x = time_of_day, y = n, fill = time_of_day)) +
  - A quick overview makes it clear that E.T. is either shy or burns easily.
  
 
-#
+# Okay, so now that we have that settled, what exactly should we keep an eye out for?
 
-```{r}
+```{r echo=FALSE, warning=FALSE}
 ggplot(df, aes(x=reorder(UFO_shape, UFO_shape, FUN=length), fill=UFO_shape)) + 
   geom_bar(show.legend=F) +
   coord_flip() +
   theme_bw() + xlab("UFO Shape") + ylab("Number of Appearances") + ggtitle("UFO Shapes Seen Worldwide");
 
-df %>%
-  filter(country == "us") %>%
-  count(UFO_shape, sort = TRUE) %>%
-  slice_head(n = 10) %>%
-  pull(UFO_shape)
+```
 
-top_shapes <- df %>%
-  filter(country == "us", !is.na(UFO_shape), UFO_shape != "") %>%
-  count(UFO_shape, sort = TRUE) %>%
-  slice_head(n = 10) %>%
-  pull(UFO_shape)
+ - Light? At night? Well, that could be anything!
+ - Let's look at some examples of the most common just so we have an idea.
+ 
+ 
+# Here are some examples:
 
+ [Image of Light]
+ [Image of Triangle]
+ [Image of Circle]
+ [Image of Fireball]
+ 
+ 
+# Okay, maybe there is some correlation between the time of day and what shape tends to appear... 
+
+```{r echo=FALSE, warning=FALSE}
 df %>%
   filter(
     country == "us",
@@ -548,31 +554,77 @@ df %>%
 
 ```
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-df %>%
-  filter(!is.na(UFO_shape), UFO_shape != "") %>%
-  count(UFO_shape, sort = TRUE) %>%
-  slice_head(n = 10)
+ - Well, not quite.
+ - Fireballs do seem much more focused on happening at night, though!
 
+
+# Maybe a quick look at how long we have to notice these manifestations...
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+shape_summary <- df %>%
+  filter(
+    !is.na(UFO_shape),
+    UFO_shape != "",
+    !is.na(length_min)
+  ) %>%
+  group_by(UFO_shape) %>%
+  summarize(
+    count = n(),
+    avg_duration_minutes = ceiling(mean(length_min, na.rm = TRUE))
+  ) %>%
+  arrange(desc(count))
+
+shape_summary
 ```
 
+ - Well... that can't be right...
+ 
 
-
-# Duration of Encounters 
+# That makes sense. I don't suppose someone could have possibly witnessed a sighting for 21 years straight.
 
 ```{r echo=FALSE, warning=FALSE}
 df %>% filter(length_min>1e6) %>% 
   select(-c(length_of_encounter_seconds,DATE_2,description,year, month, day ,hour, min, month_name, month_name_ordered,state.province))
 ```
 
-some UFO shapes tend to be seen for longer durations than others?
+
+# Let's shave off a lot of that excess percentile and see what we end up with...
+
 ```{r echo=FALSE, warning=FALSE}
-shape_counts <- new_ufo %>%
-  count(shape, name = "n") %>%
-  arrange(desc(n))
+cutoff <- quantile(df$length_min, 0.99, na.rm = TRUE)
 
-shape_counts
+shape_summary <- df %>%
+  filter(
+    !is.na(UFO_shape),
+    UFO_shape != "",
+    !is.na(length_min),
+    length_min <= cutoff
+  ) %>%
+  group_by(UFO_shape) %>%
+  summarize(
+    count = n(),
+    avg_duration = ceiling(mean(length_min))
+  ) %>%
+  arrange(desc(count))
 
+shape_summary
 
 ```
+
+ - Perfect! Much more reasonable.
+ 
+ 
+# Well, I think we've uncovered some decent information in determining where to meet up with our new BFF E.T.
+
+ - Make sure you book your trip for the summertime.
+ - Your best bet is going to be in Texas, Florida, New York, Washington, or California...
+  - We're betting on California, though.
+ - E.T. must not know about suntan lotion, so plan to pull an all-nighter over the weekend.
+ - And lastly, keep an eye out for abnormal lights!
+  - Maybe E.T. is into the California rave scene...
+  
+  
+# To infinity...
+
+ [Closing Image]
   
