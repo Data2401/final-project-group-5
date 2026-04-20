@@ -112,10 +112,10 @@ blank_theme <- theme_fivethirtyeight()+
 # TOOLS USED:
 
   - Data Manipulation:
-   - deplyr, tidyverse, and lubridate were used to clean up our data by converting strings to numeric values, as well as allowing us to manipulate the data to find answers.
+    - deplyr, tidyverse, and lubridate were used to clean up our data by converting strings to numeric values, as well as allowing us to manipulate the data to find answers.
   
   - Data Visualization & Aesthetics:
-   - ggplot2, ggridges, RColorBrewer, viridis, ggrepel, ggthemes, grid, gridExtra all helped us to make our presentation a little nicer looking.
+    - ggplot2, ggridges, RColorBrewer, viridis, ggrepel, ggthemes, grid, gridExtra all helped us to make our presentation a little nicer looking.
 
 
 # Is There a Reason We Should Care?
@@ -135,13 +135,13 @@ glimpse(df)
 # Key Terms and Column Focus 
 
  - Country abbreviations
-  - au - Australia
-  - ca - Canada
-  - de - Germany
-  - gb - Great Britain
-  - us - United States
+   - au - Australia
+   - ca - Canada
+   - de - Germany
+   - gb - Great Britain
+   - us - United States
  - State abbreviations
-  - Too many to list!
+   - Too many to list!
  - Lat/Lon will be critical for our locating needs on the map!
  - Time of day, day, and month will be pertinant for determining the best season to find E.T.!
  - UFO Shape: Describes the Manifestation of E.T. sighting
@@ -149,7 +149,7 @@ glimpse(df)
  
 # Overview of Data and Where 
 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 df %>% 
   group_by(year,country) %>% 
   summarize(count=n()) %>%
@@ -537,14 +537,13 @@ ggplot(df, aes(x=reorder(UFO_shape, UFO_shape, FUN=length), fill=UFO_shape)) +
 df %>%
   filter(
     country == "us",
-    UFO_shape %in% top_shapes,
     !is.na(hour)
   ) %>%
   ggplot(aes(
     x = reorder(UFO_shape, hour, FUN = median),
     y = hour
   )) +
-  geom_boxplot(fill = "steelblue", outlier.alpha = 0.3) +
+  geom_boxplot(fill = "green", outlier.alpha = 0.3) +
   coord_flip() +
   scale_y_continuous(breaks = 0:23) +
   theme_bw() +
@@ -578,14 +577,17 @@ shape_summary
 ```
 
  - Well... that can't be right...
+ - Why are there such large gaps?
  
 
-# That makes sense. I don't suppose someone could have possibly witnessed a sighting for 21 years straight.
+# That makes sense...
 
 ```{r echo=FALSE, warning=FALSE}
 df %>% filter(length_min>1e6) %>% 
   select(-c(length_of_encounter_seconds,DATE_2,description,year, month, day ,hour, min, month_name, month_name_ordered,state.province))
 ```
+
+ - 21 years?
 
 
 # Let's shave off a lot of that excess percentile and see what we end up with...
