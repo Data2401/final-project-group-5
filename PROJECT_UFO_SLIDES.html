@@ -172,88 +172,63 @@ Tyler Guerrero, Emanuel Padilla, Cameron Snyder
   height: 100%;
 }
 </style>
+</div>
+<div id="greetings-traveler" class="slide section level1">
+<h1>Greetings, Traveler</h1>
+<ul class="incremental">
+<li>The data used is a CSV from Kaggle based on Extraterrestial Reports
+from 1910-2009. It shows location, time, shapes of the extraterrestial,
+and brief descriptions of the event.</li>
+</ul>
 <p><a
 href="https://www.kaggle.com/datasets/camnugent/ufo-sightings-around-the-world">Link
 to UFO Sightings Around the World</a></p>
-<p>The data is a CSV from Kaggle based on Extraterrestial Reports from
-1910-2009. It shows location, time, shapes of the extraterrestial, and
-brief descriptions of the event.</p>
 </div>
-<div id="introduction" class="slide section level1">
-<h1>Introduction</h1>
+<div id="is-it-a-bird-is-it-a-plane-superman"
+class="slide section level1">
+<h1>Is it a bird? Is it a plane? Superman?</h1>
 <ul class="incremental">
-<li><p>INTRODUCTION:</p></li>
-<li><p>Is it a bird, is it a plane…Superman? If you can’t name it, it
-might just be an unidentified flying object. Have you ever stopped to
-wonder why we’re so fascinated by UFOs in the first place? As humans,
-we’re wired for curiosity and love turning mysteries into stories,
-theories, and yes—full‑on tinfoil‑hat conspiracies. It’s time to lean
-into that curiosity and actually investigate. What are these UFOs? Is
-E.T. and his friends real? Are they just making a pit stop on good old
-oil‑rich Earth for a quick refuel? The real challenge is figuring out
-where these crafts tend to show up so we have the best shot at actually
-interacting with them. After all, who wouldn’t want to hitch a ride
-across the universe with E.T. and hear all the cosmic secrets?</p></li>
-<li><p>In this analysis, we’ll hunt for potential UFO “hotspots” on
+<li>In this analysis, we’ll hunt for potential UFO “hotspots” on
 Earth—places where sightings cluster—so you could, in theory, grab some
-friends, camp out, and go UFO‑watching in high‑probability
-zones.</p></li>
-<li><p>TOOLS USED:</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#Data Manipulation:</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># Used for data wrangling</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># Used to analyze data </span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(lubridate) <span class="co"># Used to manipulate time format</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#Data Visualization &amp; Aesthetics:</span></span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># Used for plotting</span></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="fu">library</span>(ggridges) <span class="co"># Used for ridge plots</span></span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer) <span class="co"># Used for color palettes</span></span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="fu">library</span>(viridis) <span class="co"># Used for colorblind-safe palettes</span></span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="fu">library</span>(ggrepel) <span class="co">#Used for non-overlapping labels</span></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="fu">library</span>(ggthemes) <span class="co"># Used for custom themes</span></span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="fu">library</span>(grid) <span class="co"># Used for low-level layout</span></span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="fu">library</span>(gridExtra) <span class="co"># Used for arranging plots</span></span></code></pre></div></li>
+friends, camp out, and go UFO‑watching in high‑probability zones.</li>
 </ul>
-</div>
-<div id="about-the-dataset" class="slide section level1">
-<h1>About the Dataset</h1>
-<p>The Datasets used in this analysis come from two sources:</p>
+<p>[IMAGE HERE]</p>
+<h2 id="the-questions-that-we-seek-answers-for">The questions that we
+seek answers for:</h2>
 <ul class="incremental">
-<li>QUESTIONS TO ANSWER:</li>
-<li>Where should you vacation to if you want a chance at meeting E.T?
-<ul class="incremental">
+<li>Where should you vacation to if you want a chance at meeting
+E.T?</li>
 <li>Is there a country that best suits this need?</li>
 <li>What time of year does E.T. prefer to travel?</li>
 <li>Is there a particular time of day that E.T. leaves his house?</li>
 <li>Could E.T. be among us at this very moment?</li>
-</ul></li>
 </ul>
 </div>
-<div id="data-preparation" class="slide section level1">
-<h1>Data Preparation</h1>
+<div id="tools-used" class="slide section level1">
+<h1>TOOLS USED:</h1>
 <ul class="incremental">
-<li>source and cleaning:</li>
-<li>For this analysis we will be using two datasets with similar
-variables.</li>
+<li><p>Data Manipulation: – deplyr, tidyverse, and lubridate were used
+to clean up our data by converting strings to numeric values, as well as
+allowing us to manipulate the data to find answers.</p></li>
+<li><p>Data Visualization &amp; Aesthetics: – ggplot2, ggridges,
+RColorBrewer, viridis, ggrepel, ggthemes, grid, gridExtra all helped us
+to make our presentation a little nicer looking.</p></li>
 </ul>
-<p>Dataset 1:</p>
+</div>
+<div id="is-there-a-reason-we-should-care" class="slide section level1">
+<h1>Is There a Reason We Should Care?</h1>
 <ul class="incremental">
-<li><p>this data set was sourced from the National UFO Reporting Center
-(NUFORC), accessed via Kaggle.</p></li>
-<li><p>Each row is a reporting sightingv(observation)</p></li>
-<li><p>With variables: datetime,<br />
-city, state, country, shape, duration in seconds, duration in hours and
-minutes, comments, date posted, latitude, and lonitude.</p></li>
-<li><p>The dataset cover reports from 1910-2014, predominatly from the
-United States.</p></li>
-<li><p>Majority of self-reports are submitted online.</p></li>
-<li><p>Useful for patterns over time and location, but because of
-self-reports theres misclassification and median driven spikes.</p></li>
+<li>Aliens are cool!</li>
+<li>Wouldn’t you like to find out the best vacation locale to meet up
+with some?</li>
+<li>Also, where are these reports even originating from? Maybe you don’t
+want to risk being abducted!</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">glimpse</span>(ufo_data)</span></code></pre></div>
+</div>
+<div id="here-is-a-brief-glimpse-of-our-data"
+class="slide section level1">
+<h1>Here is a brief glimpse of our data:</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">glimpse</span>(ufo_data)</span></code></pre></div>
 <pre><code>## Rows: 89,071
 ## Columns: 11
 ## $ datetime             &lt;chr&gt; &quot;10/10/1949 20:30&quot;, &quot;10/10/1949 21:00&quot;, &quot;10/10/19…
@@ -337,7 +312,7 @@ of use.</p>
 <h1>Overview of Data and Where</h1>
 <pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
 ## `.groups` argument.</code></pre>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-6-1.png" alt="" width="768" /></p>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-4-1.png" alt="" width="768" /></p>
 <ul class="incremental">
 <li>With a quick overview, we can see that most reports do not actually
 occur until after ~1995.</li>
@@ -347,7 +322,7 @@ internet access before then.</li>
 </div>
 <div id="worldwide-view" class="slide section level1">
 <h1>Worldwide View</h1>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-7-1.png" alt="" width="768" /><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-7-2.png" alt="" width="768" /></p>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-5-1.png" alt="" width="768" /><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-5-2.png" alt="" width="768" /></p>
 <ul class="incremental">
 <li>Here is a broader-scope view of reports around the world.</li>
 <li>As we can see, there appears to be a conglomerate of reports focused
@@ -357,74 +332,74 @@ in the United States.</li>
 </div>
 <div id="united-states-view" class="slide section level1">
 <h1>United States View</h1>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-8-1.png" alt="" width="768" />
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-6-1.png" alt="" width="768" />
 - Our initial thought was that most reports would come out of the rural
 midwest. - It appears that might not be the case. Maybe a density plot
 will help us understand where the focus of reports are…</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>usMap <span class="sc">+</span> </span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">geom_density_2d_filled</span>(</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>    <span class="at">data =</span> df <span class="sc">%&gt;%</span> </span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>      <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&#39;us&#39;</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>             <span class="sc">!</span>state.province <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;hi&#39;</span>,<span class="st">&#39;ak&#39;</span>,<span class="st">&#39;pr&#39;</span>),</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>             <span class="sc">!</span><span class="fu">is.na</span>(longitude), <span class="sc">!</span><span class="fu">is.na</span>(latitude)),</span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude),</span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>    <span class="at">contour_var =</span> <span class="st">&quot;ndensity&quot;</span></span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">name =</span> <span class="st">&quot;Density&quot;</span>) <span class="sc">+</span></span>
-<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Density of UFO Sightings in the US&quot;</span>)</span></code></pre></div>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-9-1.png" alt="" width="768" /></p>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-10-1.png" alt="" width="768" /></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>usMap <span class="sc">+</span> </span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">geom_density_2d_filled</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>    <span class="at">data =</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>      <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&#39;us&#39;</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>             <span class="sc">!</span>state.province <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;hi&#39;</span>,<span class="st">&#39;ak&#39;</span>,<span class="st">&#39;pr&#39;</span>),</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>             <span class="sc">!</span><span class="fu">is.na</span>(longitude), <span class="sc">!</span><span class="fu">is.na</span>(latitude)),</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude),</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>    <span class="at">contour_var =</span> <span class="st">&quot;ndensity&quot;</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">name =</span> <span class="st">&quot;Density&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Density of UFO Sightings in the US&quot;</span>)</span></code></pre></div>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-7-1.png" alt="" width="768" /></p>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-8-1.png" alt="" width="768" /></p>
 </div>
 <div id="top-states-and-seasons" class="slide section level1">
 <h1>Top states and Seasons</h1>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-11-1.png" alt="" width="768" /></p>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-9-1.png" alt="" width="768" /></p>
 </div>
 <div id="day-or-night" class="slide section level1">
 <h1>Day or Night</h1>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-12-1.png" alt="" width="768" /></p>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-10-1.png" alt="" width="768" /></p>
 </div>
 <div id="additional-graphs" class="slide section level1">
 <h1>Additional Graphs</h1>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-13-1.png" alt="" width="768" /></p>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-11-1.png" alt="" width="768" /></p>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-12-1.png" alt="" width="768" /></p>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-13-1.png" alt="" width="768" /><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-13-2.png" alt="" width="768" /></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(UFO_shape, UFO_shape, <span class="at">FUN=</span>length), <span class="at">fill=</span>UFO_shape)) <span class="sc">+</span> </span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">show.legend=</span>F) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;UFO Shape&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Number of Appearances&quot;</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;UFO Shapes Seen Worldwide&quot;</span>);</span></code></pre></div>
 <p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-14-1.png" alt="" width="768" /></p>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-15-1.png" alt="" width="768" /><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-15-2.png" alt="" width="768" /></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(UFO_shape, UFO_shape, <span class="at">FUN=</span>length), <span class="at">fill=</span>UFO_shape)) <span class="sc">+</span> </span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">show.legend=</span>F) <span class="sc">+</span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;UFO Shape&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Number of Appearances&quot;</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;UFO Shapes Seen Worldwide&quot;</span>);</span></code></pre></div>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-16-1.png" alt="" width="768" /></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;us&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="fu">count</span>(UFO_shape, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="fu">pull</span>(UFO_shape)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;us&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="fu">count</span>(UFO_shape, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="fu">pull</span>(UFO_shape)</span></code></pre></div>
 <pre><code>##  [1] &quot;light&quot;     &quot;triangle&quot;  &quot;circle&quot;    &quot;fireball&quot;  &quot;unknown&quot;   &quot;other&quot;    
 ##  [7] &quot;sphere&quot;    &quot;disk&quot;      &quot;oval&quot;      &quot;formation&quot;</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>top_shapes <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;us&quot;</span>, <span class="sc">!</span><span class="fu">is.na</span>(UFO_shape), UFO_shape <span class="sc">!=</span> <span class="st">&quot;&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">count</span>(UFO_shape, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  <span class="fu">pull</span>(UFO_shape)</span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>    country <span class="sc">==</span> <span class="st">&quot;us&quot;</span>,</span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>    UFO_shape <span class="sc">%in%</span> top_shapes,</span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(hour)</span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">reorder</span>(UFO_shape, hour, <span class="at">FUN =</span> median),</span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>    <span class="at">y =</span> hour</span>
-<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a>  )) <span class="sc">+</span></span>
-<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">outlier.alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">23</span>) <span class="sc">+</span></span>
-<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;UFO Shape (Top 10 Most Common)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Hour of Day (0–23)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Do UFO Shapes Appear at Different Times of Day? (US)&quot;</span>)</span></code></pre></div>
-<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-16-2.png" alt="" width="768" /></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>top_shapes <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;us&quot;</span>, <span class="sc">!</span><span class="fu">is.na</span>(UFO_shape), UFO_shape <span class="sc">!=</span> <span class="st">&quot;&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="fu">count</span>(UFO_shape, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  <span class="fu">pull</span>(UFO_shape)</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>    country <span class="sc">==</span> <span class="st">&quot;us&quot;</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>    UFO_shape <span class="sc">%in%</span> top_shapes,</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(hour)</span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">reorder</span>(UFO_shape, hour, <span class="at">FUN =</span> median),</span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>    <span class="at">y =</span> hour</span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">outlier.alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">23</span>) <span class="sc">+</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;UFO Shape (Top 10 Most Common)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Hour of Day (0–23)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Do UFO Shapes Appear at Different Times of Day? (US)&quot;</span>)</span></code></pre></div>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-14-2.png" alt="" width="768" /></p>
 <pre><code>##    UFO_shape     n
 ## 1      light 16565
 ## 2   triangle  7865

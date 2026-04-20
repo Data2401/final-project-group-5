@@ -90,7 +90,7 @@ blank_theme <- theme_fivethirtyeight()+
 
  - The data used is a CSV from Kaggle based on Extraterrestial Reports from 1910-2009. It shows location, time, shapes of the extraterrestial, and brief descriptions of the event.
  
-[Link to UFO Sightings Around the World](https://www.kaggle.com/datasets/camnugent/ufo-sightings-around-the-world)
+ - [Link to UFO Sightings Around the World](https://www.kaggle.com/datasets/camnugent/ufo-sightings-around-the-world)
 
 
 # Is it a bird? Is it a plane? Superman?
@@ -100,7 +100,7 @@ blank_theme <- theme_fivethirtyeight()+
  [IMAGE HERE]
 
 
-## The questions that we seek answers for:
+# The questions that we seek answers for:
 
  - Where should you vacation to if you want a chance at meeting E.T?
  - Is there a country that best suits this need?
@@ -112,10 +112,10 @@ blank_theme <- theme_fivethirtyeight()+
 # TOOLS USED:
 
   - Data Manipulation:
-  -- deplyr, tidyverse, and lubridate were used to clean up our data by converting strings to numeric values, as well as allowing us to manipulate the data to find answers.
+   - deplyr, tidyverse, and lubridate were used to clean up our data by converting strings to numeric values, as well as allowing us to manipulate the data to find answers.
   
   - Data Visualization & Aesthetics:
-  -- ggplot2, ggridges, RColorBrewer, viridis, ggrepel, ggthemes, grid, gridExtra all helped us to make our presentation a little nicer looking.
+   - ggplot2, ggridges, RColorBrewer, viridis, ggrepel, ggthemes, grid, gridExtra all helped us to make our presentation a little nicer looking.
 
 
 # Is There a Reason We Should Care?
@@ -127,75 +127,26 @@ blank_theme <- theme_fivethirtyeight()+
 
 # Here is a brief glimpse of our data:
 
-```{r}
-glimpse(ufo_data)
-```
-
-
-
-
-
-
-
-
-
-
-# Problem and Questions 
-
-Where should you vacation to if you want a chance at meeting E.T?
-
- - Is there a country that best suits this need?
- - What time of year does E.T. prefer to travel?
- - Is there a particular time of day that E.T. leaves his house?
- - Could E.T. be among us at this very moment?
- 
-
-
-
-# Background/Reason for Choosing Data 
-
-We always hear about controversies and tinfoil hats, but we were curious how often do those from space come to visit, if at all? Is Earth a local hotspot for E.T. and his friends? Is Coachella a galaxy-wide attraction? These questions felt fun to dive into and answer.
-
-The following libraries were used to manipulate our data and create graphs:
-(ggplot2)
-(dplyr)
-(gridExtra)
-(grid)
-(RColorBrewer)
-(ggrepel)
-(ggthemes)
-(viridis)
-(ggridges)
-(tidyverse)
-(lubridate)
-
-
-
-# Unfiltered Data 
-
-Here's a glimpse of our dataframe.
-
-```{r, echo=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 glimpse(df)
-
 ```
-
- -New columns were created to alter strings to numeric values for ease of use.
-
-
 
 
 # Key Terms and Column Focus 
 
-- UFO Shape: Describes the Manifestation of E.T. sighting
-- Country abbreviations
+ - Country abbreviations
   - au - Australia
   - ca - Canada
   - de - Germany
   - gb - Great Britain
   - us - United States
-
-
+ - State abbreviations
+  - Too many to list!
+ - Lat/Lon will be critical for our locating needs on the map!
+ - Time of day, day, and month will be pertinant for determining the best season to find E.T.!
+ - UFO Shape: Describes the Manifestation of E.T. sighting
+ 
+ 
 # Overview of Data and Where 
 
 ```{r echo=FALSE, warning=FALSE}
@@ -220,7 +171,8 @@ df %>%
 ```
 
  - With a quick overview, we can see that most reports do not actually occur until after ~1995.
- - We believe this is most likely attributed to the lack of public, internet access before then.
+ - We believe this is most likely attributed to the lack of public internet access before then.
+ - It also looks like the US has an overwhelming number of reports!
 
 
 # Worldwide View
@@ -233,7 +185,13 @@ world_map <- ggplot() +
            fill = "white", color = "green", size = 0.1)
 
 world_map + geom_point(data=df,aes(x=longitude,y=latitude),alpha=.5,size=.25) + theme_fivethirtyeight() + ggtitle('Locations of UFO Sightings')
+```
 
+ - Here is a broader-scope view of reports around the world.
+ - Let's check for density readings!
+ 
+# Density Plot
+```{r}
 world_map +
   geom_density_2d_filled(
     data = df,
@@ -247,7 +205,7 @@ world_map +
   ggtitle("Density of UFO Sightings")
 ```
 
- - Here is a broader-scope view of reports around the world.
+ - Just as our overview promised...
  - As we can see, there appears to be a conglomerate of reports focused in the United States.
  - Let's take a closer look...
 
@@ -267,9 +225,11 @@ usMap +
 
 
 ```
+ 
  - Our initial thought was that most reports would come out of the rural midwest.
  - It appears that might not be the case. Maybe a density plot will help us understand where the focus of reports are...
  
+#
 ```{r warning=FALSE}
 usMap + 
   geom_density_2d_filled(
