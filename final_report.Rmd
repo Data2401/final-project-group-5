@@ -1,0 +1,29 @@
+---
+title: "Report"
+author: "me"
+date: "2026-04-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+If you can’t name it, it might just be an unidentified flying object. Have you ever stopped to wonder why we’re so fascinated by UFOs in the first place? As humans, we’re wired for curiosity and love turning mysteries into stories, theories, and yes—full‑on tinfoil‑hat conspiracies. It’s time to lean into that curiosity and actually investigate. What are these UFOs? Is E.T. and his friends real? Are they just making a pit stop on good old oil‑rich Earth for a quick refuel? The real challenge is figuring out where these crafts tend to show up so we have the best shot at actually interacting with them. After all, who wouldn’t want to hitch a ride across the universe with E.T. and hear all the cosmic secrets?
+
+# Data:
+- Display and Summary:
+
+# Exploratory Data Analysis
+- Discovery
+- plots/graphs/tables
+- explanation
+
+# Summary
+- problem and insights
+- implication and limitations
+- formatting and other requirements
+
+We always hear about controversies and tinfoil hats, but we were curious how often do those from space come to visit, if at all? Is Earth a local hotspot for E.T. and his friends? Is Coachella a galaxy-wide attraction? These questions felt fun to dive into and answer.

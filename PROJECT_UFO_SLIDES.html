@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Tyler Guerrero, Emanuel Padilla, Cameron Snyder" />
+  <title>A Peek Into the Life of E.T.?</title>
+  <style type="text/css">
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+              </style>
+  <script src="PROJECT_UFO_SLIDES_files/header-attrs-2.30/header-attrs.js"></script>
+  <link href="PROJECT_UFO_SLIDES_files/slidy-2/styles/slidy.css" rel="stylesheet" />
+  <script src="PROJECT_UFO_SLIDES_files/slidy-2/scripts/slidy.js"></script>
+  <script src="PROJECT_UFO_SLIDES_files/slidy_shiny-1/slidy_shiny.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+   href="neon.css" />
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">A Peek Into the Life of E.T.?</h1>
+  <p class="author">
+Tyler Guerrero, Emanuel Padilla, Cameron Snyder
+  </p>
+</div>
+<div class="slide section level1">
+
+<style type="text/css">
+.reveal .slides {
+  overflow-y: auto !important;
+}
+
+.reveal .slides section {
+  overflow-y: auto !important;
+  height: 100%;
+}
+</style>
+</div>
+<div id="greetings-traveler" class="slide section level1">
+<h1>Greetings, Traveler</h1>
+<ul class="incremental">
+<li><p>The data used is a CSV from Kaggle based on Extraterrestial
+Reports from 1910-2009. It shows location, time, shapes of the
+extraterrestial, and brief descriptions of the event.</p></li>
+<li><p><a
+href="https://www.kaggle.com/datasets/camnugent/ufo-sightings-around-the-world">Link
+to UFO Sightings Around the World</a></p></li>
+</ul>
+</div>
+<div id="is-it-a-bird-is-it-a-plane-superman"
+class="slide section level1">
+<h1>Is it a bird? Is it a plane? Superman?</h1>
+<ul class="incremental">
+<li>In this analysis, we’ll hunt for potential UFO “hotspots” on
+Earth—places where sightings cluster—so you could, in theory, grab some
+friends, camp out, and go UFO‑watching in high‑probability zones.</li>
+</ul>
+<p><img src="ufo_1.webp" alt="" width="60%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="the-questions-that-we-seek-answers-for"
+class="slide section level1">
+<h1>The questions that we seek answers for:</h1>
+<ul class="incremental">
+<li>Where should you vacation to if you want a chance at meeting
+E.T?</li>
+<li>Is there a country that best suits this need?</li>
+<li>What time of year does E.T. prefer to travel?</li>
+<li>Is there a particular time of day that E.T. leaves his house?</li>
+<li>Could E.T. be among us at this very moment?</li>
+</ul>
+</div>
+<div id="tools-used" class="slide section level1">
+<h1>TOOLS USED:</h1>
+<ul class="incremental">
+<li>Data Manipulation:
+<ul class="incremental">
+<li>deplyr, tidyverse, and lubridate were used to clean up our data by
+converting strings to numeric values, as well as allowing us to
+manipulate the data to find answers.</li>
+</ul></li>
+<li>Data Visualization &amp; Aesthetics:
+<ul class="incremental">
+<li>ggplot2, ggridges, RColorBrewer, viridis, ggrepel, ggthemes, grid,
+gridExtra all helped us to make our presentation a little nicer
+looking.</li>
+</ul></li>
+</ul>
+</div>
+<div id="is-there-a-reason-we-should-care" class="slide section level1">
+<h1>Is There a Reason We Should Care?</h1>
+<ul class="incremental">
+<li>Aliens are cool!</li>
+<li>Wouldn’t you like to find out the best vacation locale to meet up
+with some?</li>
+<li>Also, where are these reports even originating from? Maybe you don’t
+want to risk being abducted!</li>
+</ul>
+</div>
+<div id="here-is-a-brief-glimpse-of-our-data"
+class="slide section level1">
+<h1>Here is a brief glimpse of our data:</h1>
+<pre><code>## Rows: 80,332
+## Columns: 22
+## $ Date_time                       &lt;chr&gt; &quot;10/10/1949 20:30&quot;, &quot;10/10/1949 21:00&quot;…
+## $ city                            &lt;chr&gt; &quot;san marcos&quot;, &quot;lackland afb&quot;, &quot;chester…
+## $ state.province                  &lt;chr&gt; &quot;tx&quot;, &quot;tx&quot;, &quot;&quot;, &quot;tx&quot;, &quot;hi&quot;, &quot;tn&quot;, &quot;&quot;, …
+## $ country                         &lt;chr&gt; &quot;us&quot;, &quot;none&quot;, &quot;gb&quot;, &quot;us&quot;, &quot;us&quot;, &quot;us&quot;, …
+## $ UFO_shape                       &lt;chr&gt; &quot;cylinder&quot;, &quot;light&quot;, &quot;circle&quot;, &quot;circle…
+## $ length_of_encounter_seconds     &lt;chr&gt; &quot;2700&quot;, &quot;7200&quot;, &quot;20&quot;, &quot;20&quot;, &quot;900&quot;, &quot;30…
+## $ described_duration_of_encounter &lt;chr&gt; &quot;45 minutes&quot;, &quot;1-2 hrs&quot;, &quot;20 seconds&quot;,…
+## $ description                     &lt;chr&gt; &quot;This event took place in early fall a…
+## $ date_documented                 &lt;chr&gt; &quot;4/27/2004&quot;, &quot;12/16/2005&quot;, &quot;1/21/2008&quot;…
+## $ latitude                        &lt;dbl&gt; 29.88306, 29.38421, 53.20000, 28.97833…
+## $ longitude                       &lt;dbl&gt; -97.941111, -98.581082, -2.916667, -96…
+## $ year                            &lt;dbl&gt; 1949, 1949, 1955, 1956, 1960, 1961, 19…
+## $ month                           &lt;dbl&gt; 10, 10, 10, 10, 10, 10, 10, 10, 10, 10…
+## $ day                             &lt;int&gt; 10, 10, 10, 10, 10, 10, 10, 10, 10, 10…
+## $ hour                            &lt;int&gt; 20, 21, 17, 21, 20, 19, 21, 23, 20, 21…
+## $ min                             &lt;int&gt; 30, 0, 0, 0, 0, 0, 0, 45, 0, 0, 0, 0, …
+## $ month_name                      &lt;dbl&gt; 10, 10, 10, 10, 10, 10, 10, 10, 10, 10…
+## $ month_name_ordered              &lt;fct&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ DATE                            &lt;date&gt; 1949-10-10, 1949-10-10, 1955-10-10, 1…
+## $ DATE_2                          &lt;date&gt; 1949-10-10, 1949-10-10, 1955-10-10, 1…
+## $ weekday                         &lt;ord&gt; Mon, Mon, Mon, Wed, Mon, Tue, Sun, Sun…
+## $ length_min                      &lt;dbl&gt; 45.0000000, 120.0000000, 0.3333333, 0.…</code></pre>
+</div>
+<div id="key-terms-and-column-focus" class="slide section level1">
+<h1>Key Terms and Column Focus</h1>
+<ul class="incremental">
+<li>Country abbreviations
+<ul class="incremental">
+<li>au - Australia</li>
+<li>ca - Canada</li>
+<li>de - Germany</li>
+<li>gb - Great Britain</li>
+<li>us - United States</li>
+</ul></li>
+<li>State abbreviations
+<ul class="incremental">
+<li>Too many to list!</li>
+</ul></li>
+<li>Lat/Lon will be critical for our locating needs on the map!</li>
+<li>Time of day, day, and month will be pertinant for determining the
+best season to find E.T.!</li>
+<li>UFO Shape: Describes the Manifestation of E.T. sighting</li>
+</ul>
+</div>
+<div id="overview-of-data-and-where" class="slide section level1">
+<h1>Overview of Data and Where</h1>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-4-1.png" alt="" width="768" /></p>
+<ul class="incremental">
+<li>With a quick overview, we can see that most reports do not actually
+occur until after ~1995.</li>
+<li>We believe this is most likely attributed to the lack of public
+internet access before then.</li>
+<li>It also looks like the US has an overwhelming number of
+reports!</li>
+</ul>
+</div>
+<div id="worldwide-view" class="slide section level1">
+<h1>Worldwide View</h1>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-5-1.png" alt="" width="768" /></p>
+<ul class="incremental">
+<li>Here is a broader-scope view of reports around the world.</li>
+<li>Let’s check for density readings!</li>
+</ul>
+</div>
+<div id="density-plot" class="slide section level1">
+<h1>Density Plot</h1>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-6-1.png" alt="" width="768" /></p>
+<ul class="incremental">
+<li>Just as our overview promised…</li>
+<li>As we can see, there appears to be a conglomerate of reports focused
+in the United States.</li>
+<li>Let’s take a closer look…</li>
+</ul>
+</div>
+<div id="united-states-view" class="slide section level1">
+<h1>United States View</h1>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-7-1.png" alt="" width="768" /></p>
+<ul class="incremental">
+<li>Our initial thought was that most reports would come out of the
+rural midwest.</li>
+<li>It appears that might not be the case. Maybe a density plot will
+help us understand where the focus of reports are…</li>
+</ul>
+</div>
+<div id="united-states-density" class="slide section level1">
+<h1>United States Density</h1>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-8-1.png" alt="" width="768" /></p>
+<ul class="incremental">
+<li>Looks like we have some pretty strong contenders in all four corners
+of the country.</li>
+<li>Let’s see if we pull the numbers whether or not that matches.</li>
+</ul>
+</div>
+<div id="top-counts-in-the-states" class="slide section level1">
+<h1>Top Counts in the States</h1>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-9-1.png" alt="" width="768" /></p>
+<ul class="incremental">
+<li>Whoa! What’s going on in California that E.T. is so into?</li>
+</ul>
+</div>
+<div id="coachella-maybe" class="slide section level1">
+<h1>Coachella, maybe?</h1>
+<p><img src="ETwig.webp" alt="" width="60%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="so-far" class="slide section level1">
+<h1>So Far…</h1>
+<ul class="incremental">
+<li>Okay, so we know that we’re already living in the country filled
+with the most sightings of E.T. activity. That’s great!</li>
+<li>Fortunately, Texas is also in the top rankings!</li>
+<li>This is only a part of the story, though. When is also impornant to
+know!</li>
+</ul>
+</div>
+<div id="first-lets-look-at-the-seasons" class="slide section level1">
+<h1>First, let’s look at the seasons!</h1>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-11-1.png" alt="" width="768" /></p>
+<ul class="incremental">
+<li>Well, it seems pretty obvious that E.T. really hates the cold.</li>
+<li>These are human-reported…</li>
+<li>Maybe we hate the cold?</li>
+</ul>
+</div>
+<div id="top-states-and-seasons" class="slide section level1">
+<h1>Top states and Seasons</h1>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-12-1.png" alt="" width="768" /></p>
+<ul class="incremental">
+<li>So California’s perfect weather might be causing the data to pull
+ahead for them.</li>
+<li>Let’s try another look:</li>
+</ul>
+</div>
+<div id="line-plot" class="slide section level1">
+<h1>Line Plot</h1>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-13-1.png" alt="" width="768" /></p>
+<ul class="incremental">
+<li>The season definitely plays a factor.</li>
+<li>Less-so for Florida and Texas, it seems. The weather there is likely
+static for most of the year barring a handful of days.</li>
+</ul>
+</div>
+<div id="what-day-of-the-week" class="slide section level1">
+<h1>What Day of the Week?</h1>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-14-1.png" alt="" width="768" /></p>
+<ul class="incremental">
+<li>Looks like the weekends reign supreme here.</li>
+<li>Does this trend apply to all of our top state contenders?</li>
+</ul>
+</div>
+<div id="day-of-the-week-by-states" class="slide section level1">
+<h1>Day of the Week by States</h1>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-15-1.png" alt="" width="768" /></p>
+<ul class="incremental">
+<li>This trend does seem mostly applicable!</li>
+<li>Some states more than others.</li>
+</ul>
+</div>
+<div id="brief-summary" class="slide section level1">
+<h1>Brief Summary:</h1>
+<ul class="incremental">
+<li>Okay, so we have the U.S.</li>
+<li>We know E.T. is a fan of Texas, Cali, Florida, New York, and
+Washington…
+<ul class="incremental">
+<li>The most populated states?</li>
+</ul></li>
+<li>E.T. HATES the cold weather. Perhaps that’s why the southern states
+are among the highest in reports.</li>
+<li>They also love to come out during the weekend.
+<ul class="incremental">
+<li>Especially Saturday!</li>
+</ul></li>
+</ul>
+</div>
+<div id="okay-so" class="slide section level1">
+<h1>Okay, so…</h1>
+<ul class="incremental">
+<li>We have our California hotel booked for a nice summer weekend… but
+when should we be keeping watch?</li>
+</ul>
+</div>
+<div id="day-or-night" class="slide section level1">
+<h1>Day or Night</h1>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-16-1.png" alt="" width="768" /></p>
+<ul class="incremental">
+<li>A quick overview makes it clear that E.T. is either shy or burns
+easily.</li>
+</ul>
+</div>
+<div
+id="okay-so-now-that-we-have-that-settled-what-exactly-should-we-keep-an-eye-out-for"
+class="slide section level1">
+<h1>Okay, so now that we have that settled, what exactly should we keep
+an eye out for?</h1>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-17-1.png" alt="" width="768" /></p>
+<ul class="incremental">
+<li>Light? At night? Well, that could be anything!</li>
+<li>Let’s look at some examples of the most common just so we have an
+idea.</li>
+</ul>
+</div>
+<div id="here-are-some-examples" class="slide section level1">
+<h1>Here are some examples:</h1>
+<p><img src="ufolight1.png" alt="" width="60%" style="display: block; margin: auto;" /></p>
+<p><img src="ufolight.webp" alt="" width="60%" style="display: block; margin: auto;" /></p>
+<p><img src="ufo_1.webp" alt="" width="60%" style="display: block; margin: auto;" /></p>
+<p><img src="ufo_fireball.webp" alt="" width="60%" style="display: block; margin: auto;" /></p>
+</div>
+<div
+id="okay-maybe-there-is-some-correlation-between-the-time-of-day-and-what-shape-tends-to-appear"
+class="slide section level1">
+<h1>Okay, maybe there is some correlation between the time of day and
+what shape tends to appear…</h1>
+<p><img src="PROJECT_UFO_SLIDES_files/figure-slidy/unnamed-chunk-22-1.png" alt="" width="768" /></p>
+<ul class="incremental">
+<li>Well, not quite.</li>
+<li>Fireballs do seem much more focused on happening at night,
+though!</li>
+</ul>
+</div>
+<div
+id="maybe-a-quick-look-at-how-long-we-have-to-notice-these-manifestations"
+class="slide section level1">
+<h1>Maybe a quick look at how long we have to notice these
+manifestations…</h1>
+<pre><code>## # A tibble: 29 × 3
+##    UFO_shape count avg_duration_minutes
+##    &lt;chr&gt;     &lt;int&gt;                &lt;dbl&gt;
+##  1 light     16565                  220
+##  2 triangle   7865                   28
+##  3 circle     7607                   80
+##  4 fireball   6208                   68
+##  5 other      5649                  344
+##  6 unknown    5584                   93
+##  7 sphere     5387                  364
+##  8 disk       5213                   25
+##  9 oval       3733                   65
+## 10 formation  2457                   21
+## # ℹ 19 more rows</code></pre>
+<ul class="incremental">
+<li>Well… that can’t be right…</li>
+<li>Why are there such large gaps?</li>
+</ul>
+</div>
+<div id="that-makes-sense" class="slide section level1">
+<h1>That makes sense…</h1>
+<pre><code>##         Date_time                    city country UFO_shape
+## 1 10/1/1983 17:00 birmingham (uk/england)      gb    sphere
+## 2  6/3/2010 23:30         ottawa (canada)      ca     other
+## 3 9/15/1991 18:00              greenbrier      us     light
+##   described_duration_of_encounter date_documented latitude  longitude
+## 1                        31 years       4/12/2013 52.46667  -1.916667
+## 2                        23000hrs        7/6/2010 45.41667 -75.700000
+## 3                        21 years       3/31/2008 35.23389 -92.387500
+##         DATE weekday length_min
+## 1 1983-10-01     Sat    1630600
+## 2 2010-06-03     Thu    1380000
+## 3 1991-09-15     Sun    1104600</code></pre>
+<ul class="incremental">
+<li>21 years?</li>
+</ul>
+</div>
+<div
+id="lets-shave-off-a-lot-of-that-excess-percentile-and-see-what-we-end-up-with"
+class="slide section level1">
+<h1>Let’s shave off a lot of that excess percentile and see what we end
+up with…</h1>
+<pre><code>## # A tibble: 29 × 3
+##    UFO_shape count avg_duration
+##    &lt;chr&gt;     &lt;int&gt;        &lt;dbl&gt;
+##  1 light     16430           14
+##  2 triangle   7816           11
+##  3 circle     7551           13
+##  4 fireball   6193            7
+##  5 other      5584           13
+##  6 unknown    5519           14
+##  7 sphere     5344           12
+##  8 disk       5156           14
+##  9 oval       3701           12
+## 10 formation  2448           11
+## # ℹ 19 more rows</code></pre>
+<ul class="incremental">
+<li>Perfect! Much more reasonable.</li>
+</ul>
+</div>
+<div
+id="well-i-think-weve-uncovered-some-decent-information-in-determining-where-to-meet-up-with-our-new-bff-e.t."
+class="slide section level1">
+<h1>Well, I think we’ve uncovered some decent information in determining
+where to meet up with our new BFF E.T.</h1>
+<ul class="incremental">
+<li>Make sure you book your trip for the summertime.</li>
+<li>Your best bet is going to be in Texas, Florida, New York,
+Washington, or California…
+<ul class="incremental">
+<li>We’re betting on California, though.</li>
+</ul></li>
+<li>E.T. must not know about suntan lotion, so plan to pull an
+all-nighter over the weekend.</li>
+<li>And lastly, keep an eye out for abnormal lights!
+<ul class="incremental">
+<li>Maybe E.T. is into the California rave scene…</li>
+</ul></li>
+</ul>
+</div>
+<div id="to-infinity" class="slide section level1">
+<h1>To infinity…</h1>
+<p><img src="ufo_rave.png" alt="" width="60%" style="display: block; margin: auto;" /></p>
+</div>
+
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+</body>
+</html>
