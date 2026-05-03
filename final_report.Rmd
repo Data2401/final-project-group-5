@@ -92,7 +92,10 @@ blank_theme <- theme_fivethirtyeight()+
 
 If you can’t name it, it might just be an unidentified flying object. Have you ever stopped to wonder why we’re so fascinated by UFOs in the first place? As humans, we’re wired for curiosity and love turning mysteries into stories, theories, and yes—full‑on tinfoil‑hat conspiracies. It’s time to lean into that curiosity and actually investigate. 
 
-What are these UFOs? Are E.T. and his friends real? Are they just making a pit stop on good old oil‑rich Earth for a quick refuel? The real challenge is figuring out where these crafts tend to show up so we have the best shot at actually interacting with them. After all, who wouldn’t want to hitch a ride across the universe with E.T. and hear all their cosmic secrets? To address these questions, we will be looking at two similar data sets:
+What are these UFOs? Are E.T. and his friends real? Are they just making a pit stop on good old oil‑rich Earth for a quick refuel? The real challenge is figuring out where these crafts tend to show up so we have the best shot at actually interacting with them. After all, who wouldn’t want to hitch a ride across the universe with E.T. and hear all their cosmic secrets? 
+
+To address these questions, we will be looking at two similar data sets:
+
  - **ufo_data.csv** - Our original data set that was removed from Kaggle during initial analysis.
  - **ufo_sighting_data.csv** - A similar data set with additional entries. The data is based on Extraterrestial Reports from 1910-2009. It shows location, time, shapes of the extraterrestial, and brief descriptions of the event.
  
