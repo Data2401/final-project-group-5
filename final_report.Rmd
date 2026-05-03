@@ -26,6 +26,7 @@ library(ggplot2)
 library(dplyr)
 library(gridExtra)
 library(grid)
+library(kableExtra)
 library(RColorBrewer)
 library(ggrepel)
 library(ggthemes)
@@ -143,7 +144,7 @@ In order to more easily register and analyze the information provided by our dat
  - tidyverse - helped clean and tidy information
  - viridis - added some additional color themes
 
-By analyzing our data with these methods, we believe we can accurately ascertain the prime location for extraterrestrial encounters.
+By analyzing our data with these methods, we believe we can accurately ascertain the prime location for extraterrestrial encounters. By the end, you should feel comfortable with booking a hotel room at one of our recommendations and waiting for an out-of-this-world experience.
 
 ```{r glimpse}
 glimpse(df)
@@ -189,9 +190,9 @@ df %>%
   geom_vline(xintercept=1990,color='black') + 
   annotate("text", x = 1975, y = 6000, label = "Internet Access\nto General Public",color='black') + 
   theme_fivethirtyeight() + 
-  ggtitle('UFO Sightings Overview by Year and Location', 'NA, Australia, Canada, Germany, Great Britain, United States') + 
+  ggtitle('UFO Sightings Overview by Year and Location', 'NA, Australia, Canada, Germany, Great Britain, United States') +
   theme(legend.position='right',legend.direction='vertical')
-
+  
 ```
 
  - With a quick overview, we can see that most reports do not actually occur until after ~1995.
