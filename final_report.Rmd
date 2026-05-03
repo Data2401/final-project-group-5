@@ -121,31 +121,39 @@ knitr::include_graphics("ufo_1.webp")
 
 # About the Dataset
 
+## Data Source
+
 The data is based on Extraterrestial Reports from 1910-2009. It shows location, time, shapes of the extraterrestial, and brief descriptions of the event.
 
 - [Link to UFO Sightings Around the World](https://www.kaggle.com/datasets/camnugent/ufo-sightings-around-the-world)
 
-# TOOLS USED:
+## Tools Used
 
-  - Data Manipulation:
-    - deplyr, tidyverse, and lubridate were used to clean up our data by converting strings to numeric values, as well as allowing us to manipulate the data to find answers.
-  
-  - Data Visualization & Aesthetics:
-    - ggplot2, ggridges, RColorBrewer, viridis, ggrepel, ggthemes, grid, gridExtra all helped us to make our presentation a little nicer looking.
+In order to more easily register and analyze the information provided by our data set, we used the following tools to aid in organization and visualization:
 
+ - dplyr - used for efficient data manipulation
+ - ggplot2 - used for creating helpful visualizations that conveyed our found data
+ - ggridges - helped with creating ridgeline plots
+ - ggrepel - helped with automatically repelling overlapping text on figures
+ - ggthemes - for some additional, visually appealing themes
+ - grid - useful for creating some more complex plots that required positioning
+ - gridExtra - helped with combining multiple plots onto one surface
+ - lubridate - made conversions of strings to integers much more efficient
+ - RColorBrewer - for visually appealing color schemes
+ - tidyverse - helped clean and tidy information
+ - viridis - added some additional color themes
+
+By analyzing our data with these methods, we believe we can accurately ascertain the prime location for extraterrestrial encounters.
+
+```{r glimpse}
+glimpse(df)
+```
 
 # Is There a Reason We Should Care?
 
  - Aliens are cool!
  - Wouldn't you like to find out the best vacation locale to meet up with some?
  - Also, where are these reports even originating from? Maybe you don't want to risk being abducted!
- 
-
-# Here is a brief glimpse of our data:
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-glimpse(df)
-```
 
 
 # Key Terms and Column Focus 
