@@ -88,7 +88,9 @@ blank_theme <- theme_fivethirtyeight()+
   )
 ```
 
-# Greetings Traveler
+---
+
+# Introduction
 
 If you can’t name it, it might just be an unidentified flying object. Have you ever stopped to wonder why we’re so fascinated by UFOs in the first place? As humans, we’re wired for curiosity and love turning mysteries into stories, theories, and yes—full‑on tinfoil‑hat conspiracies. It’s time to lean into that curiosity and actually investigate. 
 
@@ -97,29 +99,31 @@ What are these UFOs? Are E.T. and his friends real? Are they just making a pit s
 To address these questions, we will be looking at two similar data sets:
 
  - **ufo_data.csv** - Our original data set that was removed from Kaggle during initial analysis.
- - **ufo_sighting_data.csv** - A similar data set with additional entries. The data is based on Extraterrestial Reports from 1910-2009. It shows location, time, shapes of the extraterrestial, and brief descriptions of the event.
+ - **ufo_sighting_data.csv** - A similar data set with additional entries. 
  
- - [Link to UFO Sightings Around the World](https://www.kaggle.com/datasets/camnugent/ufo-sightings-around-the-world)
-
-
-# Is it a bird? Is it a plane? Superman?
-
- - In this analysis, we’ll hunt for potential UFO “hotspots” on Earth—places where sightings cluster—so you could, in theory, grab some friends, camp out, and go UFO‑watching in high‑probability zones. 
+In this analysis, we’ll hunt for potential UFO “hotspots” on Earth—places where sightings cluster—so you could, in theory, grab some friends, camp out, and go UFO‑watching in high‑probability zones. 
  
  
 ```{r, echo=FALSE, fig.align='center', out.width='60%'}
 knitr::include_graphics("ufo_1.webp")
 ```
 
+---
 
-# The questions that we seek answers for:
+# The questions twe seek answers for:
 
- - Where should you vacation to if you want a chance at meeting E.T?
- - Is there a country that best suits this need?
- - What time of year does E.T. prefer to travel?
- - Is there a particular time of day that E.T. leaves his house?
- - Could E.T. be among us at this very moment?
+ - What locations have the greatest volume of extraterrestrial reports?
+ - What time of year are extraterrestrial sightings reported the most?
+ - Is there a particular time of day that extraterrestrial sightings occur?
+ - What type of objects should you be on the look-out for?
 
+---
+
+# About the Dataset
+
+The data is based on Extraterrestial Reports from 1910-2009. It shows location, time, shapes of the extraterrestial, and brief descriptions of the event.
+
+- [Link to UFO Sightings Around the World](https://www.kaggle.com/datasets/camnugent/ufo-sightings-around-the-world)
 
 # TOOLS USED:
 
