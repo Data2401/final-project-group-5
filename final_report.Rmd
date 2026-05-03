@@ -150,29 +150,27 @@ By analyzing our data with these methods, we believe we can accurately ascertain
 glimpse(df)
 ```
 
-# Is There a Reason We Should Care?
+## Extraterrestrial Analysis
 
- - Aliens are cool!
- - Wouldn't you like to find out the best vacation locale to meet up with some?
- - Also, where are these reports even originating from? Maybe you don't want to risk being abducted!
+Over the course of this report, we will be starting with a broad scope to get idea of where these sightings take place across the world, followed by steps to increase precision. The following categories will be used to discern this information:
 
-
-# Key Terms and Column Focus 
-
- - Country abbreviations
-   - au - Australia
-   - ca - Canada
-   - de - Germany
-   - gb - Great Britain
-   - us - United States
- - State abbreviations
-   - Too many to list!
- - Lat/Lon will be critical for our locating needs on the map!
- - Time of day, day, and month will be pertinant for determining the best season to find E.T.!
- - UFO Shape: Describes the Manifestation of E.T. sighting
+ - Latitude/Longitude - this data will give us precise locations for where these reports are occurring, and range all across the world
+ - Month - this will provide the time of year for our analysis (Spring, Summer, Autumn, Winter)
+ - Day - gives us information on what the best time during the week will be to spot anomalies
+ - Time - this gives us key information to decide between morning vs. night
+ - UFO Shape - will give us a heads-up on what to look out for when we see it
  
- 
+---
+
 # Overview of Data and Where 
+
+Country abbreviations
+
+ - au - Australia
+ - ca - Canada
+ - de - Germany
+ - gb - Great Britain
+ - us - United States
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 df %>% 
