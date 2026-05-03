@@ -164,13 +164,20 @@ Over the course of this report, we will be starting with a broad scope to get id
 
 # Overview of Data and Where 
 
-Country abbreviations
+Starting with a general overview, we have sources from five primary locations:
 
  - au - Australia
  - ca - Canada
  - de - Germany
  - gb - Great Britain
  - us - United States
+ 
+Since we can not do much with reports without an origin due to our goal, those will be excluded from later interpretations. As we sifted through all of the data, there was a clear point where reports began to increase over time. Due to the way this information was collected, via internet submissions, it becomes clear why so many reports came after the 1990s. Without internet access, there was no way for the public to report these events!
+
+Another thing we took note of looking at this data is how this information was gathered, primarily, from places where English is widely spoken. This felt somewhat limiting, because perhaps there are databases with this type of information out there, but it different languages; however, we decided to work with what we were able to understand.
+
+With an overview of our data, we are able to see the following...
+
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 df %>% 
@@ -190,13 +197,10 @@ df %>%
   theme_fivethirtyeight() + 
   ggtitle('UFO Sightings Overview by Year and Location', 'NA, Australia, Canada, Germany, Great Britain, United States') +
   theme(legend.position='right',legend.direction='vertical')
-  
+
 ```
 
- - With a quick overview, we can see that most reports do not actually occur until after ~1995.
- - We believe this is most likely attributed to the lack of public internet access before then.
- - It also looks like the US has an overwhelming number of reports!
-
+<center>By aggregating report totals across the world, we can see that most reports do not actually occur until after ~1995. At this point, North America very clearly pulls ahead.</center>
 
 # Worldwide View
 
