@@ -132,17 +132,17 @@ The data is based on Extraterrestial Reports from 1910-2009. It shows location, 
 
 In order to more easily register and analyze the information provided by our data set, we used the following tools to aid in organization and visualization:
 
- - dplyr - used for efficient data manipulation
- - ggplot2 - used for creating helpful visualizations that conveyed our found data
- - ggridges - helped with creating ridgeline plots
- - ggrepel - helped with automatically repelling overlapping text on figures
- - ggthemes - for some additional, visually appealing themes
- - grid - useful for creating some more complex plots that required positioning
- - gridExtra - helped with combining multiple plots onto one surface
- - lubridate - made conversions of strings to integers much more efficient
- - RColorBrewer - for visually appealing color schemes
- - tidyverse - helped clean and tidy information
- - viridis - added some additional color themes
+ - **dplyr** - used for efficient data manipulation
+ - **ggplot2** - used for creating helpful visualizations that conveyed our found data
+ - **ggridges** - helped with creating ridgeline plots
+ - **ggrepel** - helped with automatically repelling overlapping text on figures
+ - **ggthemes** - for some additional, visually appealing themes
+ - **grid** - useful for creating some more complex plots that required positioning
+ - **gridExtra** - helped with combining multiple plots onto one surface
+ - **lubridate** - made conversions of strings to integers much more efficient
+ - **RColorBrewer** - for visually appealing color schemes
+ - **tidyverse** - helped clean and tidy information
+ - **viridis** - added some additional color themes
 
 By analyzing our data with these methods, we believe we can accurately ascertain the prime location for extraterrestrial encounters. By the end, you should feel comfortable with booking a hotel room at one of our recommendations and waiting for an out-of-this-world experience.
 
@@ -154,15 +154,17 @@ glimpse(df)
 
 Over the course of this report, we will be starting with a broad scope to get idea of where these sightings take place across the world, followed by steps to increase precision. The following categories will be used to discern this information:
 
- - Latitude/Longitude - this data will give us precise locations for where these reports are occurring, and range all across the world
- - Month - this will provide the time of year for our analysis (Spring, Summer, Autumn, Winter)
- - Day - gives us information on what the best time during the week will be to spot anomalies
- - Time - this gives us key information to decide between morning vs. night
- - UFO Shape - will give us a heads-up on what to look out for when we see it
+ - **Latitude/Longitude** - this data will give us precise locations for where these reports are occurring, and range all across the world
+ - **Month** - this will provide the time of year for our analysis (Spring, Summer, Autumn, Winter)
+ - **Day** - gives us information on what the best time during the week will be to spot anomalies
+ - **Time** - this gives us key information to decide between morning vs. night
+ - **UFO Shape** - will give us a heads-up on what to look out for when we see it
  
 ---
 
-# Overview of Data and Where 
+# Starting from the Top
+
+## Worldwide Histogram
 
 Starting with a general overview, we have sources from five primary locations:
 
@@ -202,22 +204,28 @@ df %>%
 
 <center>By aggregating report totals across the world, we can see that most reports do not actually occur until after ~1995. At this point, North America very clearly pulls ahead.</center>
 
-# Worldwide View
+## Worldwide View
+
+Our histogram did a decent job—at a glance—of showing up which country seemed to have the greatest number of reports, but we thought it would be even easier to see if we laid everything out on a map. After all, we're given the exact coordinates, so why not see what we can tell from this information.
 
 ```{r echo=FALSE, warning=FALSE}
 countries_map <- map_data("world")
 world_map <- ggplot() + 
   geom_map(data = countries_map, 
            map = countries_map,aes(x = long, y = lat, map_id = region, group = group),
-           fill = "white", color = "green", size = 0.1)
+           fill = "white", color = "black", size = 0.1)
 
 world_map + geom_point(data=df,aes(x=longitude,y=latitude),alpha=.5,size=.25) + theme_fivethirtyeight() + ggtitle('Locations of UFO Sightings')
 ```
 
- - Here is a broader-scope view of reports around the world.
- - Let's check for density readings!
+<center>It is immediately evident that North America is littered with reports; however, the reports with no origin are now much clearer since they are scattered across the ocean.</center>
  
-# Density Plot
+This is helpful, but with a type of density plot, we could much better locate where the congestion is focused. After all, there could be several points in other locations just sitting on top of one-another.
+
+## Worldwide Density Plot
+
+We decided to start with the same view just to make sure that we're accurate with our analysis of North America being a hotspot.
+
 ```{r echo=FALSE, warning=FALSE}
 world_map +
   geom_density_2d_filled(
