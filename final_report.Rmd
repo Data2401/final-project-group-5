@@ -1,12 +1,27 @@
 ---
-title: "Final Report"
-author: "Tyler Guerrero & Emmanduel Padilla"
-date: "2026-05-04"
-output: html_document
+title: "Extraterrestial Sightings and Where to Meet Them"
+author: "DATA 2401 - Tyler Guerrero & Emmanuel Padilla"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+    theme: flatly
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+knitr::opts_chunk$set(
+  echo    = TRUE,    
+  message = FALSE,    
+  warning = FALSE,    
+  fig.width  = 7,
+  fig.height = 4.5,
+  fig.align  = "center"
+)
+```
+
+```{r packages}
 library(ggplot2)
 library(dplyr)
 library(gridExtra)
@@ -18,7 +33,9 @@ library(viridis)
 library(ggridges)
 library(tidyverse)
 library(lubridate) #for the mdy()
+```
 
+```{r load-data}
 #dataset 1
 
 ufo_data <- read.csv("ufo_data.csv")
@@ -71,13 +88,13 @@ blank_theme <- theme_fivethirtyeight()+
   )
 ```
 
-## R Markdown
+# Greetings Traveler
 
-If you can’t name it, it might just be an unidentified flying object. Have you ever stopped to wonder why we’re so fascinated by UFOs in the first place? As humans, we’re wired for curiosity and love turning mysteries into stories, theories, and yes—full‑on tinfoil‑hat conspiracies. It’s time to lean into that curiosity and actually investigate. What are these UFOs? Is E.T. and his friends real? Are they just making a pit stop on good old oil‑rich Earth for a quick refuel? The real challenge is figuring out where these crafts tend to show up so we have the best shot at actually interacting with them. After all, who wouldn’t want to hitch a ride across the universe with E.T. and hear all the cosmic secrets?
+If you can’t name it, it might just be an unidentified flying object. Have you ever stopped to wonder why we’re so fascinated by UFOs in the first place? As humans, we’re wired for curiosity and love turning mysteries into stories, theories, and yes—full‑on tinfoil‑hat conspiracies. It’s time to lean into that curiosity and actually investigate. 
 
-# Greetings, Traveler
-
- - The data used is a CSV from Kaggle based on Extraterrestial Reports from 1910-2009. It shows location, time, shapes of the extraterrestial, and brief descriptions of the event.
+What are these UFOs? Are E.T. and his friends real? Are they just making a pit stop on good old oil‑rich Earth for a quick refuel? The real challenge is figuring out where these crafts tend to show up so we have the best shot at actually interacting with them. After all, who wouldn’t want to hitch a ride across the universe with E.T. and hear all their cosmic secrets? To address these questions, we will be looking at two similar data sets:
+ - **ufo_data.csv** - Our original data set that was removed from Kaggle during initial analysis.
+ - **ufo_sighting_data.csv** - A similar data set with additional entries. The data is based on Extraterrestial Reports from 1910-2009. It shows location, time, shapes of the extraterrestial, and brief descriptions of the event.
  
  - [Link to UFO Sightings Around the World](https://www.kaggle.com/datasets/camnugent/ufo-sightings-around-the-world)
 
