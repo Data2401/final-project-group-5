@@ -1,0 +1,12 @@
+df$year <- sapply(df$Date_time, function(x) as.numeric(strsplit(strsplit(x," ")[[1]][1],"/")[[1]][3]))
+df$month <- sapply(df$Date_time, function(x) as.numeric(strsplit(strsplit(x," ")[[1]][1],"/")[[1]][1]))
+df$day <- sapply(df$Date_time, function(x) as.numeric(strsplit(strsplit(x," ")[[1]][1],"/")[[1]][2]))
+df$hour <- sapply(df$Date_time, function(x) as.numeric(strsplit(strsplit(x," ")[[1]][2],":")[[1]][1]))
+df$hour <- ifelse(df$hour==24,0,df$hour)
+df$min <- sapply(df$Date_time, function(x) as.numeric(strsplit(strsplit(x," ")[[1]][2],":")[[1]][2]))
+df$month_name <- sapply(df$month, function(x) month.name[x])
+df$month_name_ordered <- factor(df$month_name, levels =c(month.name))
+df$DATE <- sapply(df$Date_time, function(x) strsplit(x,' ')[[1]][1])
+df$DATE_2 <- as.Date(df$DATE,"%m/%d/%Y")
+df$weekday <- factor(weekdays(df$DATE_2, T), levels = rev(c("Mon", "Tue", "Wed", "Thu","Fri", "Sat", "Sun")))
+df$length_min <- as.numeric(df$length_of_encounter_seconds)/60
