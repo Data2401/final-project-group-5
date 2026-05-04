@@ -1,0 +1,678 @@
+---
+title: "Extraterrestial Sightings and Where to Meet Them"
+author: "DATA 2401 - Tyler Guerrero & Emmanuel Padilla"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+    theme: flatly
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo    = TRUE,    
+  message = FALSE,    
+  warning = FALSE,    
+  fig.width  = 7,
+  fig.height = 4.5,
+  fig.align  = "center"
+)
+```
+
+```{r packages}
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
+library(grid)
+library(kableExtra)
+library(RColorBrewer)
+library(ggrepel)
+library(ggthemes)
+library(viridis)
+library(ggridges)
+library(tidyverse)
+library(lubridate) #for the mdy()
+```
+
+```{r load-data}
+#dataset 1
+
+ufo_data <- read.csv("ufo_data.csv")
+new_ufo <- ufo_data %>% select("datetime", "city", "state", "country", "shape", "duration..seconds.", "latitude", "longitude") %>% 
+  mutate(across(where(is.character), trimws)) %>% #filtering the white spaces 
+  filter(if_all(everything(), ~ . != "")) %>% 
+  na.omit() %>% 
+  separate(col=datetime, into = c("date", "time"), sep = " ")
+
+# Adding new data set and changing strings to numeric values for data manipulation
+ufo_sighting_data <- read.csv('ufo_sighting_data.csv',sep=',',stringsAsFactors=F)
+df <- ufo_sighting_data %>%
+  mutate(country = case_when(
+    is.na(country) ~ "none",
+    country == ""  ~ "none",
+    TRUE ~ country
+  ))
+
+df$latitude <- as.numeric(df$latitude)
+
+dt <- mdy_hm(df$Date_time)
+
+df$year  <- year(dt)
+df$month <- month(dt)
+df$day   <- day(dt)
+df$hour  <- hour(dt)
+df$hour  <- ifelse(df$hour == 24, 0, df$hour)
+df$min   <- minute(dt)
+
+df$month_name <- month(dt, label = FALSE, abbr = FALSE)
+df$month_name_ordered <- factor(df$month_name, levels = month.name)
+
+df$DATE   <- date(dt)
+df$DATE_2 <- as.Date(df$DATE)
+
+df$weekday <- factor(wday(dt, label = TRUE, abbr = TRUE, week_start = 1),
+                     levels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"))
+
+df$length_min <- as.numeric(df$length_of_encounter_seconds) / 60
+
+#Theme to help graphs fit better
+blank_theme <- theme_fivethirtyeight()+
+  theme(
+  axis.title.x = element_blank(),
+  axis.title.y = element_blank(),
+  panel.border = element_blank(),
+  panel.grid=element_blank(),
+  axis.ticks = element_blank(),
+  plot.title=element_text(size=14, face="bold")
+  )
+```
+
+---
+
+# Introduction
+
+If you can’t name it, it might just be an unidentified flying object. Have you ever stopped to wonder why we’re so fascinated by UFOs in the first place? As humans, we’re wired for curiosity and love turning mysteries into stories, theories, and yes—full‑on tinfoil‑hat conspiracies. It’s time to lean into that curiosity and actually investigate. 
+
+What are these UFOs? Are E.T. and his friends real? Are they just making a pit stop on good old oil‑rich Earth for a quick refuel? The real challenge is figuring out where these crafts tend to show up so we have the best shot at actually interacting with them. After all, who wouldn’t want to hitch a ride across the universe with E.T. and hear all their cosmic secrets? 
+
+To address these questions, we will be looking at two similar data sets:
+
+ - **ufo_data.csv** - Our original data set that was removed from Kaggle during initial analysis.
+ - **ufo_sighting_data.csv** - A similar data set with additional entries. 
+ 
+In this analysis, we’ll hunt for potential UFO “hotspots” on Earth—places where sightings cluster—so you could, in theory, grab some friends, camp out, and go UFO‑watching in high‑probability zones. 
+ 
+ 
+```{r, echo=FALSE, fig.align='center', out.width='60%'}
+knitr::include_graphics("ufo_1.webp")
+```
+
+---
+
+# The questions twe seek answers for:
+
+ - What locations have the greatest volume of extraterrestrial reports?
+ - What time of year are extraterrestrial sightings reported the most?
+ - Is there a particular time of day that extraterrestrial sightings occur?
+ - What type of objects should you be on the look-out for?
+
+---
+
+# About the Dataset
+
+## Data Source
+
+The data is based on Extraterrestial Reports from 1910-2009. It shows location, time, shapes of the extraterrestial, and brief descriptions of the event.
+
+- [Link to UFO Sightings Around the World](https://www.kaggle.com/datasets/camnugent/ufo-sightings-around-the-world)
+
+## Tools Used
+
+In order to more easily register and analyze the information provided by our data set, we used the following tools to aid in organization and visualization:
+
+ - **dplyr** - used for efficient data manipulation
+ - **ggplot2** - used for creating helpful visualizations that conveyed our found data
+ - **ggridges** - helped with creating ridgeline plots
+ - **ggrepel** - helped with automatically repelling overlapping text on figures
+ - **ggthemes** - for some additional, visually appealing themes
+ - **grid** - useful for creating some more complex plots that required positioning
+ - **gridExtra** - helped with combining multiple plots onto one surface
+ - **lubridate** - made conversions of strings to integers much more efficient
+ - **RColorBrewer** - for visually appealing color schemes
+ - **tidyverse** - helped clean and tidy information
+ - **viridis** - added some additional color themes
+
+By analyzing our data with these methods, we believe we can accurately ascertain the prime location for extraterrestrial encounters. By the end, you should feel comfortable with booking a hotel room at one of our recommendations and waiting for an out-of-this-world experience.
+
+```{r glimpse}
+glimpse(df)
+```
+
+## Extraterrestrial Analysis
+
+Over the course of this report, we will be starting with a broad scope to get idea of where these sightings take place across the world, followed by steps to increase precision. The following categories will be used to discern this information:
+
+ - **Latitude/Longitude** - this data will give us precise locations for where these reports are occurring, and range all across the world
+ - **Month** - this will provide the time of year for our analysis (Spring, Summer, Autumn, Winter)
+ - **Day** - gives us information on what the best time during the week will be to spot anomalies
+ - **Time** - this gives us key information to decide between morning vs. night
+ - **UFO Shape** - will give us a heads-up on what to look out for when we see it
+ 
+---
+
+# Starting from the Top
+
+## Worldwide Histogram
+
+Starting with a general overview, we have sources from five primary locations:
+
+ - au - Australia
+ - ca - Canada
+ - de - Germany
+ - gb - Great Britain
+ - us - United States
+ 
+Since we can not do much with reports without an origin due to our goal, those will be excluded from later interpretations. As we sifted through all of the data, there was a clear point where reports began to increase over time. Due to the way this information was collected, via internet submissions, it becomes clear why so many reports came after the 1990s. Without internet access, there was no way for the public to report these events!
+
+Another thing we took note of looking at this data is how this information was gathered, primarily, from places where English is widely spoken. This felt somewhat limiting, because perhaps there are databases with this type of information out there, but it different languages; however, we decided to work with what we were able to understand.
+
+With an overview of our data, we are able to see the following...
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+df %>% 
+  group_by(year,country) %>% 
+  summarize(count=n()) %>%
+  ggplot(aes(x = year, y = count, fill = country)) + 
+  geom_histogram(stat='identity',width=1,color='white',size=.25) + 
+  scale_fill_brewer(palette='Paired', labels = c(
+    "none" = "No Origin", 
+    "au" = "Australia", 
+    "ca" = "Canada", 
+    "de" = "Germany", 
+    "gb" = "UK", 
+    "us" = "USA")) + 
+  geom_vline(xintercept=1990,color='black') + 
+  annotate("text", x = 1975, y = 6000, label = "Internet Access\nto General Public",color='black') + 
+  theme_fivethirtyeight() + 
+  ggtitle('UFO Sightings Overview by Year and Location', 'NA, Australia, Canada, Germany, Great Britain, United States') +
+  theme(legend.position='right',legend.direction='vertical')
+
+```
+
+<center>By aggregating report totals across the world, we can see that most reports do not actually occur until after ~1995. At this point, North America very clearly pulls ahead.</center>
+
+## Worldwide View
+
+Our histogram did a decent job—at a glance—of showing up which country seemed to have the greatest number of reports, but we thought it would be even easier to see if we laid everything out on a map. After all, we're given the exact coordinates, so why not see what we can tell from this information.
+
+```{r echo=FALSE, warning=FALSE}
+countries_map <- map_data("world")
+world_map <- ggplot() + 
+  geom_map(data = countries_map, 
+           map = countries_map,aes(x = long, y = lat, map_id = region, group = group),
+           fill = "white", color = "black", size = 0.1)
+
+world_map + geom_point(data=df,aes(x=longitude,y=latitude),alpha=.5,size=.25) + theme_fivethirtyeight() + ggtitle('Locations of UFO Sightings')
+```
+
+<center>It is immediately evident that North America is littered with reports; however, the reports with no origin are now much clearer since they are scattered across the ocean.</center>
+
+<br>
+
+This is helpful, but with a type of density plot, we could much better locate where the congestion is focused. After all, there could be several points in other locations just sitting on top of one-another.
+
+## Worldwide Density Plot
+
+We decided to start with the same view just to make sure that we're accurate with our analysis of North America being a hotspot.
+
+```{r echo=FALSE, warning=FALSE}
+world_map +
+  geom_density_2d_filled(
+    data = df,
+    aes(x = longitude, y = latitude),
+    alpha = 0.6,
+    contour_var = "ndensity"
+  ) +
+  coord_quickmap() +
+  scale_fill_viridis_d(name = "Density") +
+  theme_fivethirtyeight() +
+  ggtitle("Density of UFO Sightings")
+```
+
+<center>It is now extremely evident that the strongest concentration of reports are in the United States.</center>
+
+## View of the United States
+
+After using a density plot, we were able to see that a majority of UFO reports occurred in the United States. That makes this country the prime location—based on our data—to focus on if we want the best odds at seeing the extraterrestrial. We did not just want the country, though, so we decided that the same method would help us determine where, exactly, in the country held the greatest congestion of reports.
+
+```{r echo=FALSE, warning=FALSE}
+states_map <- map_data("state")
+
+usMap <- ggplot() + 
+  geom_map(data = states_map, map = states_map,aes(x = long, y = lat, map_id = region, group = group),fill = "white", color = "black", size = 0.1) + 
+  theme_fivethirtyeight()
+
+usMap + 
+  geom_point(data=filter(df,country=='us' & state.province!='hi' & state.province!='ak' & state.province!='pr'),aes(x=longitude,y=latitude),alpha=.75,size=.5) + 
+  ggtitle('Location of UFO Sightings in the US')
+
+
+```
+ 
+<center>At a glance, the northeast portion of the country is the most congested.</center>
+
+<br>
+
+```{r echo=FALSE, warning=FALSE}
+usMap + 
+  geom_density_2d_filled(
+    data = df %>% 
+      filter(country == 'us',
+             !state.province %in% c('hi','ak','pr'),
+             !is.na(longitude), !is.na(latitude)),
+    aes(x = longitude, y = latitude),
+    alpha = 0.7,
+    contour_var = "ndensity"
+  ) +
+  scale_fill_viridis_d(name = "Density") +
+  ggtitle("Density of UFO Sightings in the US")
+
+```
+
+<center>With a density plot, we found that each corner of the country has a large amount of reports.</center>
+
+---
+
+# A Focus on States
+
+Now that it has become clear which country we want to focus on, that helps us to consolidate what part of the data we need to look at. Since the density plot seemed to be focused on the four corners of the country, let's look at these states:
+
+ - **California**
+ - **Florida**
+ - **New York**
+ - **Texas**
+ - **Washington**
+ 
+Even though Texas doesn't reside in one of the four corners, we wanted to include it since we might have a choice to look out through our own backyard window.
+
+```{r echo=FALSE, warning=FALSE}
+df %>%
+  filter(!is.na(state.province)) %>%   # remove NA upfront
+  count(state.province, sort = TRUE) %>%
+  slice_head(n = 6) %>%
+  mutate(state_full = state.name[match(toupper(state.province), state.abb)]) %>%
+  filter(!is.na(state_full)) %>%       # safeguard: drop anything not matched
+  ggplot(aes(x = reorder(state_full, n), y = n, fill = state_full)) +
+  geom_col() +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(angle = 50, size = 9, hjust = 1),
+    legend.position = "none"
+  ) +
+  xlab("State") +
+  ylab("Number of Reports") +
+  ggtitle("Top 5 States for UFO Sightings in the USA")
+```
+
+<center>Reports of extraterrestrial activity are much more prevalent in California compared to anywhere else.</center>
+ 
+## Why is California Leading?
+
+It became very clear from just a look at these statistics that California was our hotspot for sightings. While it could be true that E.T. and his friends are huge fans of Coachella, California's population also far exceeds that of any other state in the country. 
+
+```{r, echo=FALSE, fig.align='center', out.width='60%'}
+knitr::include_graphics("ETwig.webp")
+```
+
+Armed with this information, we can now further analyze *when* to find E.T.
+
+---
+
+# Time to Look into the When
+
+Since we were able to ascertain a pretty good depiction of *where* these occurences happen, it's time to dissect the *when*. Our dataset was a bit tricky in this regard. When we first looked at everything within, all of the numerical columns were stored as strings. This made sorting and tidying the data almost impossible.
+
+Fortunately, thanks to lubridate, we were able to separate parts of these strings into integers. With that, we are now able to derive more granular details about when these sightings occurred.
+ 
+## A Look at the Seasons
+
+Since our dataframe did not directly include a column for seasons, we had dictate seasons using a mutation that assigned a season based on the month's numerical value. After this was complete, we chose to compare the seasons alongside the time of day.
+
+ - *Important to note that the time values are based on a 24-hour scale.*
+
+```{r echo=FALSE, warning=FALSE}
+df %>%
+  filter(country == "us", !is.na(hour), !is.na(month)) %>%
+  mutate(
+    season = case_when(
+      month %in% c(12, 1, 2)  ~ "Winter",
+      month %in% c(3, 4, 5)   ~ "Spring",
+      month %in% c(6, 7, 8)   ~ "Summer",
+      month %in% c(9, 10, 11) ~ "Fall"
+    )
+  ) %>%
+  mutate(season = factor(season, levels = c("Winter","Spring","Summer","Fall"))) %>% 
+  count(hour, season) %>%
+  ggplot(aes(x = hour, y = n, color = season)) +
+  geom_line(size = 1) +
+  geom_point(size = 1.5) +
+  scale_x_continuous(breaks = 0:23) +
+  theme_bw() +
+  xlab("Hour of Day") +
+  ylab("Number of Sightings") +
+  ggtitle("UFO Sightings by Time of Day (US) Across Seasons") +
+  labs(color = "Season")
+```
+
+<center>Reportings are exacerbated at night, and mostly in the summer.</center>
+
+<br>
+
+A line plot helped discern some valuable information:
+
+ - Reports died out during the day between 4AM and 4PM. Our conclusion was that, because these reports are human-made, most people likely work during these times. There's also the factor that it's much harder to see objects in the sky when the sun is out.
+ - Summer is when reports tend to peak. A common reason for this is how much free time people tend to have during that season. School is out, and it is when families tend to vacation the most.
+
+## States and Seasons 
+
+Since we narrowed down our hotspot states, we wanted to see if the seasonal information varied at all. Since winters don't tend to be as obstructive in the south, we hypothesized that reports might remain consistent in those states.
+
+
+```{r echo=FALSE, warning=FALSE}
+season_state_ufo <- new_ufo %>%
+  mutate(
+    date = parse_date_time(date, orders = c("mdy", "ymd", "dmy", "mdy HM", "ymd HM")),
+    month_num = month(date),
+    season = case_when(
+      month_num %in% c(12, 1, 2)  ~ "Winter",
+      month_num %in% c(3, 4, 5)   ~ "Spring",
+      month_num %in% c(6, 7, 8)   ~ "Summer",
+      month_num %in% c(9, 10, 11) ~ "Fall"
+    )
+  ) %>%
+  filter(country == "us") %>%        #focusing on the united states 
+  count(season, state, name = "n") %>%
+  group_by(season) %>%
+  slice_max(n, n = 5)               #top 10 states per season
+
+ggplot(season_state_ufo, aes(x = reorder(state, n), y = n, fill = season)) +
+  geom_col(color="black", show.legend = FALSE) +
+  coord_flip() +
+  facet_wrap(~ season, scales = "free_y") +
+  scale_fill_manual(values = c(
+    "Winter" = "blue",
+    "Spring" = "green",
+    "Summer" = "red",
+    "Fall"   = "yellow"
+  )) +
+  labs(
+    title = "Top 5 States for UFO Sightings by Season in the United States",
+    x = "State",
+    y= "Number of Sightings"
+  ) +
+  theme_minimal()
+
+```
+
+<center>There is *some* consistency with the hypothesis. California, generally, maintains a high number of reports across all seasons.</center>
+ 
+## What Can We Conclude from this?
+
+Well, so far, we have concluded the following:
+
+ 1. United State is an extraterrestrial hotspot
+ 2. California is the state with the highest concentration of extraterrestrial reports
+ 3. Summer is the prime season for extraterrestrial events
+ 
+Another piece of information we've gathered from this is the time of day. It was clear from our earlier graphic that reports spiked during the night. We have the data to look more at this in the following section. 
+
+---
+ 
+# Day of the Week
+
+It was pertinent to our questions to figure what day, exactly, is best for our extraterrestrial sighting. Fortunately, our dataframe included the days of the week, which made forming a plot with that information easy.
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+df %>%
+  filter(country == "us", !is.na(DATE_2)) %>%
+  mutate(
+    weekday = wday(DATE_2, label = TRUE, abbr = TRUE, week_start = 1)
+  ) %>%
+  count(weekday) %>%
+  ggplot(aes(x = weekday, y = n, group = 1)) +
+  geom_line(color = "green", size = 1) +
+  geom_point(color = "black", size = 2) +
+  theme_bw() +
+  xlab("Day of Week") +
+  ylab("Number of Sightings") +
+  ggtitle("UFO Sightings by Day of Week")
+
+```
+
+<center>It looks like even E.T. doesn't care for Mondays. The weekends clearly pull ahead.</center>
+ 
+## Mondays are Awful
+
+That was easy enough, but just to be certain, we did a quick check with declaring daytime as any time between 6AM and 8PM. We know from earlier—when looking at seasons—that most of those reports were also later than 6PM, but with a column graph, we can see just how definite that theory is.
+
+```{r echo=FALSE, warning=FALSE}
+
+ca_summer_tod <- new_ufo %>%
+  mutate(
+    date = parse_date_time(date, orders = c("mdy", "ymd", "dmy")),
+    hour= as.integer(substr(time, 1, 2)),  # getting the  hour from the time var string
+    time_of_day = case_when(
+      hour >= 6 & hour < 20~ "Daytime",
+      TRUE~ "Nighttime"
+    ),
+    month_num   = month(date),
+    season      = case_when(
+      month_num %in% c(12, 1, 2) ~ "Winter",
+      month_num %in% c(3, 4, 5)  ~ "Spring",
+      month_num %in% c(6, 7, 8)  ~ "Summer",
+      month_num %in% c(9,10,11)  ~ "Fall"
+    )
+  ) %>%
+  filter(country == "us", state == "ca", season == "Summer") %>%
+  count(time_of_day, name = "n")
+
+
+ggplot(ca_summer_tod, aes(x = time_of_day, y = n, fill = time_of_day)) +
+  geom_col(color = "black", show.legend = FALSE) +
+  scale_fill_manual(values = c(
+    "Daytime"   = "gold",
+    "Nighttime" = "navy"
+  )) +
+  labs(
+    title = "UFO Sightings by Time of Day in California (Summer)",
+    subtitle = "Daytime is from 6AM to 8PM",
+    x = "Time of Day",
+    y= "Number of Sightings"
+  ) +
+  theme_minimal()
+```
+
+<center>By a large margin, nighttime is when we should expect extraterrestrial sightings.</center>
+ 
+---
+
+# Shapes in the Sky
+
+That wasn't too bad to discern. We've learned that California summers, at night, on the weekend, are our prime, but what are we actually looking for? Fortunately, our data came with some of the most common appearances. *Unfortunately*, none of them actually included seeing E.T. themself.
+
+```{r echo=FALSE, warning=FALSE}
+ggplot(df, aes(x=reorder(UFO_shape, UFO_shape, FUN=length), fill=UFO_shape)) + 
+  geom_bar(show.legend=F) +
+  coord_flip() +
+  theme_bw() + xlab("UFO Shape") + ylab("Number of Appearances") + ggtitle("UFO Shapes Seen Worldwide");
+
+```
+
+<center>Light anomalies are the most common.</center>
+
+<br>
+
+These shapes are abundant, but the most common is simply light. It seems rather comical that light would be the most common with how abundant light pollution is in such populated areas.
+ 
+## Samples of Shapes
+
+To understand why some of the most common show up towards the top, we included a few samples to get an idea of what we were looking at.
+
+```{r, echo=FALSE, fig.align='center', out.width='60%'}
+knitr::include_graphics("ufolight1.png")
+```
+
+<center>Light</center>
+
+```{r, echo=FALSE, fig.align='center', out.width='60%'}
+knitr::include_graphics("ufolight.webp")
+```
+
+<center>Triangle</center>
+
+```{r, echo=FALSE, fig.align='center', out.width='60%'}
+knitr::include_graphics("ufo_1.webp")
+```
+
+<center>Circle.</center>
+
+```{r, echo=FALSE, fig.align='center', out.width='60%'}
+knitr::include_graphics("ufo_fireball.webp")
+```
+
+<center>Fireball</center>
+ 
+## Correlation Between Time of Day and Shapes
+
+We felt that lights being the most common anomaly could be tied to nighttime. What better time to see lights? To test that theory, we chose to look at a boxplot of each shape and the time of day they most commonly showed up. 
+
+```{r echo=FALSE, warning=FALSE}
+df %>%
+  filter(
+    country == "us",
+    !is.na(hour)
+  ) %>%
+  ggplot(aes(
+    x = reorder(UFO_shape, hour, FUN = median),
+    y = hour
+  )) +
+  geom_boxplot(fill = "lightgreen", outlier.alpha = 0.3) +
+  coord_flip() +
+  scale_y_continuous(breaks = 0:23) +
+  theme_bw() +
+  xlab("UFO Shape (Top 10 Most Common)") +
+  ylab("Hour of Day (0–23)") +
+  ggtitle("Do UFO Shapes Appear at Different Times of Day? (US)")
+
+```
+
+<center>Most shapes tend to show a median between 6PM and 8PM.</center>
+
+<br>
+
+This plot actually helps to narrow down the most common time to spot these anomalies within a 2-hour window. It would have been interesting to see if there were more anomalies spotted during the day. Shapes vary so much between their lower quartiles, though, that nailing any down in particular would be guesswork.
+
+---
+
+# Maybe a quick look at how long we have to notice these manifestations...
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+shape_summary <- df %>%
+  filter(
+    !is.na(UFO_shape),
+    UFO_shape != "",
+    !is.na(length_min)
+  ) %>%
+  group_by(UFO_shape) %>%
+  summarize(
+    count = n(),
+    avg_duration_minutes = ceiling(mean(length_min, na.rm = TRUE))
+  ) %>%
+  arrange(desc(count))
+
+kable(shape_summary,
+      col.names = c("UFO Shape", "Count", "Avg Duration (min)"),
+      align = "lrr",
+      caption = "UFO Sightings by Shape")
+```
+
+ - Well... that can't be right...
+ - Why are there such large gaps?
+ 
+
+# That makes sense...
+
+```{r echo=FALSE, warning=FALSE}
+df %>% filter(length_min>1e6) %>% 
+  select(-c(length_of_encounter_seconds,DATE_2,description,year, month, day ,hour, min, month_name, month_name_ordered,state.province)) %>% 
+  kable(caption = "Extreme UFO Encounter Durations") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE)
+```
+
+ - 21 years?
+
+
+# Let's shave off a lot of that excess percentile and see what we end up with...
+
+```{r echo=FALSE, warning=FALSE}
+cutoff <- quantile(df$length_min, 0.99, na.rm = TRUE)
+
+shape_summary <- df %>%
+  filter(
+    !is.na(UFO_shape),
+    UFO_shape != "",
+    !is.na(length_min),
+    length_min <= cutoff
+  ) %>%
+  group_by(UFO_shape) %>%
+  summarize(
+    count = n(),
+    avg_duration = ceiling(mean(length_min))
+  ) %>%
+  arrange(desc(count))
+
+kable(shape_summary,
+      col.names = c("UFO Shape", "Count", "Avg Duration (min)"),
+      align = "lrr",
+      caption = "UFO Sightings by Shape")
+
+```
+
+ - Perfect! Much more reasonable.
+
+---
+ 
+# In Conclusion
+
+We have learned a lot, not only about our data, but about how datasets can impose certain limitations. 
+
+To begin, let's compile all of the factors to give yourself the greatest chance at running into E.T.:
+
+ 1. **Country** - United States
+ 2. **State** - California
+ 3. **Season** - Summer
+ 4. **Day of the Week** - Saturday
+ 5. **Time of Day** - Night
+ 6. **What to Look Out For** - A light in the sky
+ 
+We believe—given the information in our dataset—that by abiding by these factors, your chances of an extraterrestrial encounter will be at their best.
+
+As for what comes as a limitation, we felt a few factors could likely skew the results above.
+
+ - **Language** - We briefly touched on it, but most of these reports came from very few countries. This, in no way, means that there have no been extraterrestrial sightings elsewhere in the world. For all we know, Asia could have a much larger record of sightings.
+ - **Population** - While the data points to zones with the highest concentration of reports, much more data would need to be gathered to ensure fair analysis across the board. California pulls ahead, likely, due to its immense population. A more concentrated, or accurate, depiction would've been to try and determine the reports per capita. Unfortunately, we did not have a dataset to facilitate that deep of a look.
+ 
+---
+  
+# To infinity...
+
+<center>Thank you for reading. Now, off to Coachella!</center>
+
+```{r, echo=FALSE, fig.align='center', out.width='60%'}
+knitr::include_graphics("ufo_rave.png")
+```
