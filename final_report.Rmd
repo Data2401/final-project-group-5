@@ -333,7 +333,11 @@ Since we were able to ascertain a pretty good depiction of *where* these occuren
 
 Fortunately, thanks to lubridate, we were able to separate parts of these strings into integers. With that, we are now able to derive more granular details about when these sightings occurred.
  
-## First, let's look at the seasons!
+## A Look at the Seasons
+
+Since our dataframe did not directly include a column for seasons, we had dictate seasons using a mutation that assigned a season based on the month's numerical value. After this was complete, we chose to compare the seasons alongside the time of day.
+
+ - *Important to note that the time values are based on a 24-hour scale.*
 
 ```{r echo=FALSE, warning=FALSE}
 df %>%
@@ -359,9 +363,12 @@ df %>%
   labs(color = "Season")
 ```
 
- - Well, it seems pretty obvious that E.T. really hates the cold.
- - These are human-reported...
- - Maybe we hate the cold?
+<center>Reportings are exacerbated at night, and mostly in the summer.</center>
+
+A line plot helped discern some valuable information:
+
+ - Reports died out during the day between 4AM and 4PM. Our conclusion was that, because these reports are human-made, most people likely work during these times. There's also the factor that it's much harder to see objects in the sky when the sun is out.
+ - Summer is when reports tend to peak. A common reason for this is how much free time people tend to have during that season. School is out, and it is when families tend to vacation the most.
 
 # Top states and Seasons 
 
