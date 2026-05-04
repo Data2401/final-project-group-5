@@ -427,6 +427,9 @@ Another piece of information we've gathered from this is the time of day. It was
  
 # Day of the Week
 
+It was pertinent to our questions to figure what day, exactly, is best for our extraterrestrial sighting. Fortunately, our dataframe included the days of the week, which made forming a plot with that information easy.
+
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 df %>%
   filter(country == "us", !is.na(DATE_2)) %>%
@@ -444,54 +447,11 @@ df %>%
 
 ```
 
- - Looks like the weekends reign supreme here.
- - Does this trend apply to all of our top state contenders?
+<center>It looks like even E.T. doesn't care for Mondays. The weekends clearly pull ahead.</center>
  
- 
-# Day of the Week by States
+## Mondays are Awful
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-df %>%
-  filter(
-    country == "us",
-    state.province %in% c("ca", "ny", "fl", "wa", "tx"),
-    !is.na(DATE_2)
-  ) %>%
-  mutate(
-    state = toupper(state.province),
-    weekday = wday(DATE_2, label = TRUE, abbr = TRUE, week_start = 1)
-  ) %>%
-  count(state, weekday) %>%
-  ggplot(aes(x = weekday, y = n, group = state)) +
-  geom_line(color = "green", size = 1) +
-  geom_point(size = 1.5) +
-  facet_wrap(~state, ncol = 2) +
-  theme_bw() +
-  xlab("Day of Week") +
-  ylab("Number of Sightings") +
-  ggtitle("UFO Sightings by Day of Week")
-```
-
- - This trend does seem mostly applicable!
- - Some states more than others.
- 
- 
-# Brief Summary:
-
- - Okay, so we have the U.S.
- - We know E.T. is a fan of Texas, Cali, Florida, New York, and Washington...
-   - The most populated states?
- - E.T. HATES the cold weather. Perhaps that's why the southern states are among the highest in reports.
- - They also love to come out during the weekend.
-   - Especially Saturday!
-  
-
-# Okay, so...
-
- - We have our California hotel booked for a nice summer weekend... but when should we be keeping watch?
- 
- 
-# Day or Night 
+That was easy enough, but just to be certain, we did a quick check with declaring daytime as any time between 6AM and 8PM. We know from earlier—when looking at seasons—that most of those reports were also later than 6PM, but with a column graph, we can see just how definite that theory is.
 
 ```{r echo=FALSE, warning=FALSE}
 
@@ -530,10 +490,13 @@ ggplot(ca_summer_tod, aes(x = time_of_day, y = n, fill = time_of_day)) +
   theme_minimal()
 ```
 
- - A quick overview makes it clear that E.T. is either shy or burns easily.
+<center>By a large margin, nighttime is when we should expect extraterrestrial sightings.</center>
  
+---
 
-# Okay, so now that we have that settled, what exactly should we keep an eye out for?
+# Shapes in the Sky
+
+That wasn't too bad to discern. We've learned that California summers, at night, on the weekend, are our prime, but what are we actually looking for? Fortunately, our data came with some of the most common appearances. *Unfortunately*, none of them actually included seeing E.T. themself.
 
 ```{r echo=FALSE, warning=FALSE}
 ggplot(df, aes(x=reorder(UFO_shape, UFO_shape, FUN=length), fill=UFO_shape)) + 
@@ -543,30 +506,41 @@ ggplot(df, aes(x=reorder(UFO_shape, UFO_shape, FUN=length), fill=UFO_shape)) +
 
 ```
 
- - Light? At night? Well, that could be anything!
- - Let's look at some examples of the most common just so we have an idea.
+<center>Light anomalies are the most common.</center>
+
+These shapes are abundant, but the most common is simply light. It seems rather comical that light would be the most common with how abundant light pollution is in such populated areas.
  
- 
-# Here are some examples:
+## Samples of Shapes
+
+To understand why some of the most common show up towards the top, we included a few samples to get an idea of what we were looking at.
+
 ```{r, echo=FALSE, fig.align='center', out.width='60%'}
 knitr::include_graphics("ufolight1.png")
 ```
+
+<center>Light.</center>
 
 ```{r, echo=FALSE, fig.align='center', out.width='60%'}
 knitr::include_graphics("ufolight.webp")
 ```
 
+<center>Triangle.</center>
+
 ```{r, echo=FALSE, fig.align='center', out.width='60%'}
 knitr::include_graphics("ufo_1.webp")
 ```
+
+<center>Circle.</center>
 
 ```{r, echo=FALSE, fig.align='center', out.width='60%'}
 knitr::include_graphics("ufo_fireball.webp")
 ```
 
+<center>Fireball</center>
  
- 
-# Okay, maybe there is some correlation between the time of day and what shape tends to appear... 
+## Correlation Between Time of Day and Shapes
+
+We felt that lights being the most common anomaly could be tied to nighttime. What better time to see lights? To test that theory, we chose to look at a boxplot of each shape and the time of day they most commonly showed up. 
 
 ```{r echo=FALSE, warning=FALSE}
 df %>%
@@ -578,7 +552,7 @@ df %>%
     x = reorder(UFO_shape, hour, FUN = median),
     y = hour
   )) +
-  geom_boxplot(fill = "green", outlier.alpha = 0.3) +
+  geom_boxplot(fill = "lightgreen", outlier.alpha = 0.3) +
   coord_flip() +
   scale_y_continuous(breaks = 0:23) +
   theme_bw() +
@@ -588,9 +562,11 @@ df %>%
 
 ```
 
- - Well, not quite.
- - Fireballs do seem much more focused on happening at night, though!
+<center>Most shapes tend to show a median between 6PM and 8PM.</center>
 
+This plot actually helps to narrow down the most common time to spot these anomalies within a 2-hour window. It would have been interesting to see if there were more anomalies spotted during the day. Shapes vary so much between their lower quartiles, though, that nailing any down in particular would be guesswork.
+
+---
 
 # Maybe a quick look at how long we have to notice these manifestations...
 
