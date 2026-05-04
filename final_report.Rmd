@@ -240,18 +240,17 @@ world_map +
   ggtitle("Density of UFO Sightings")
 ```
 
- - Just as our overview promised...
- - As we can see, there appears to be a conglomerate of reports focused in the United States.
- - Let's take a closer look...
+<center>It is now extremely evident that the strongest concentration of reports are in the United States.</center>
 
+# View of the United States
 
-# United States View 
+After using a density plot, we were able to see that a majority of UFO reports occurred in the United States. That makes this country the prime location—based on our data—to focus on if we want the best odds at seeing the extraterrestrial. We did not just want the country, though, so we decided that the same method would help us determine where, exactly, in the country held the greatest congestion of reports.
 
 ```{r echo=FALSE, warning=FALSE}
 states_map <- map_data("state")
 
 usMap <- ggplot() + 
-  geom_map(data = states_map, map = states_map,aes(x = long, y = lat, map_id = region, group = group),fill = "white", color = "green", size = 0.1) + 
+  geom_map(data = states_map, map = states_map,aes(x = long, y = lat, map_id = region, group = group),fill = "white", color = "black", size = 0.1) + 
   theme_fivethirtyeight()
 
 usMap + 
@@ -261,11 +260,7 @@ usMap +
 
 ```
  
- - Our initial thought was that most reports would come out of the rural midwest.
- - It appears that might not be the case. Maybe a density plot will help us understand where the focus of reports are...
- 
- 
-# United States Density
+<center>At a glance, the northeast portion of the country is the most congested.</center>
 
 ```{r echo=FALSE, warning=FALSE}
 usMap + 
@@ -283,9 +278,7 @@ usMap +
 
 ```
 
- - Looks like we have some pretty strong contenders in all four corners of the country.
- - Let's see if we pull the numbers whether or not that matches.
- 
+<center>With a density plot, we found that each corner of the country has a large amount of reports.</center>
 
 # Top Counts in the States
 
