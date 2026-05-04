@@ -242,7 +242,7 @@ world_map +
 
 <center>It is now extremely evident that the strongest concentration of reports are in the United States.</center>
 
-# View of the United States
+## View of the United States
 
 After using a density plot, we were able to see that a majority of UFO reports occurred in the United States. That makes this country the prime location—based on our data—to focus on if we want the best odds at seeing the extraterrestrial. We did not just want the country, though, so we decided that the same method would help us determine where, exactly, in the country held the greatest congestion of reports.
 
@@ -280,7 +280,19 @@ usMap +
 
 <center>With a density plot, we found that each corner of the country has a large amount of reports.</center>
 
-# Top Counts in the States
+---
+
+# A Focus on States
+
+Now that it has become clear which country we want to focus on, that helps us to consolidate what part of the data we need to look at. Since the density plot seemed to be focused on the four corners of the country, let's look at these states:
+
+ - **California**
+ - **Florida**
+ - **New York**
+ - **Texas**
+ - **Washington**
+ 
+Even though Texas doesn't reside in one of the four corners, we wanted to include it since we might have a choice to look out through our own backyard window.
 
 ```{r echo=FALSE, warning=FALSE}
 df %>%
@@ -301,15 +313,19 @@ df %>%
   ggtitle("Top 5 States for UFO Sightings in the USA")
 ```
 
- - Whoa! What's going on in California that E.T. is so into?
+<center>Reports of extraterrestrial activity are much more prevalent in California compared to anywhere else.</center>
  
+## Why is California Leading?
 
-# Coachella, maybe?
+It became very clear from just a look at these statistics that California was our hotspot for sightings. While it could be true that E.T. and his friends are huge fans of Coachella, California's population also far exceeds that of any other state in the country. 
 
 ```{r, echo=FALSE, fig.align='center', out.width='60%'}
 knitr::include_graphics("ETwig.webp")
 ```
 
+Armed with this information, we can now further analyze *when* to find E.T.
+
+---
 
 # So Far...
 
