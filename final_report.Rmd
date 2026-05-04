@@ -578,7 +578,9 @@ This plot actually helps to narrow down the most common time to spot these anoma
 
 ---
 
-# Maybe a quick look at how long we have to notice these manifestations...
+# Additional Analysis
+
+Given the plethora of data, there was one more facet of the extraterrestrial we wanted to touch on. How long were these manifestations appearing for? With a quick filter and summarize, we came across some pretty bizarre results.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 shape_summary <- df %>%
@@ -600,11 +602,11 @@ kable(shape_summary,
       caption = "UFO Sightings by Shape")
 ```
 
- - Well... that can't be right...
- - Why are there such large gaps?
- 
+<center>The difference in duration seem unrealistic. Over 300 minutes on average?</center>
 
-# That makes sense...
+<br>
+
+If this was truly the case, E.T. wouldn't be such an elusive figure. We'd have plenty of time to see the anamolies, along with record their presence. There wouldn't be such obscure documentation of them. For these reasons, we decided to take a look at some of the outliers to see if there were some extreme presences skewing the data, and sure enough...
 
 ```{r echo=FALSE, warning=FALSE}
 df %>% filter(length_min>1e6) %>% 
@@ -614,10 +616,11 @@ df %>% filter(length_min>1e6) %>%
                 full_width = FALSE)
 ```
 
- - 21 years?
+<center>The outliers for our leading categories have records spanning over 20 years!</center>
 
+<br>
 
-# Let's shave off a lot of that excess percentile and see what we end up with...
+So maybe we should shave off that excess; after all, it's very likely that the information was input incorrectly. Whoever submitted their data may have not known what measurement of time was being used. Now knowing this, we decided to shave off the outliers by issuing a cutoff for the extreme outlier inputs. By doing that, we found the following...
 
 ```{r echo=FALSE, warning=FALSE}
 cutoff <- quantile(df$length_min, 0.99, na.rm = TRUE)
@@ -643,7 +646,11 @@ kable(shape_summary,
 
 ```
 
- - Perfect! Much more reasonable.
+<center>The average sighting, in minutes, ranged from 7 to 23 minutes.</center>
+
+<br>
+
+This is much more reasonable to believe. Rest assured, that though the window to meet the extraterrestrial is small, it's not so insignificant that you won't have the chance.
 
 ---
  
