@@ -219,7 +219,9 @@ world_map + geom_point(data=df,aes(x=longitude,y=latitude),alpha=.5,size=.25) + 
 ```
 
 <center>It is immediately evident that North America is littered with reports; however, the reports with no origin are now much clearer since they are scattered across the ocean.</center>
- 
+
+<br>
+
 This is helpful, but with a type of density plot, we could much better locate where the congestion is focused. After all, there could be several points in other locations just sitting on top of one-another.
 
 ## Worldwide Density Plot
@@ -261,6 +263,8 @@ usMap +
 ```
  
 <center>At a glance, the northeast portion of the country is the most congested.</center>
+
+<br>
 
 ```{r echo=FALSE, warning=FALSE}
 usMap + 
@@ -364,6 +368,8 @@ df %>%
 ```
 
 <center>Reportings are exacerbated at night, and mostly in the summer.</center>
+
+<br>
 
 A line plot helped discern some valuable information:
 
@@ -508,6 +514,8 @@ ggplot(df, aes(x=reorder(UFO_shape, UFO_shape, FUN=length), fill=UFO_shape)) +
 
 <center>Light anomalies are the most common.</center>
 
+<br>
+
 These shapes are abundant, but the most common is simply light. It seems rather comical that light would be the most common with how abundant light pollution is in such populated areas.
  
 ## Samples of Shapes
@@ -518,13 +526,13 @@ To understand why some of the most common show up towards the top, we included a
 knitr::include_graphics("ufolight1.png")
 ```
 
-<center>Light.</center>
+<center>Light</center>
 
 ```{r, echo=FALSE, fig.align='center', out.width='60%'}
 knitr::include_graphics("ufolight.webp")
 ```
 
-<center>Triangle.</center>
+<center>Triangle</center>
 
 ```{r, echo=FALSE, fig.align='center', out.width='60%'}
 knitr::include_graphics("ufo_1.webp")
@@ -563,6 +571,8 @@ df %>%
 ```
 
 <center>Most shapes tend to show a median between 6PM and 8PM.</center>
+
+<br>
 
 This plot actually helps to narrow down the most common time to spot these anomalies within a 2-hour window. It would have been interesting to see if there were more anomalies spotted during the day. Shapes vary so much between their lower quartiles, though, that nailing any down in particular would be guesswork.
 
