@@ -594,7 +594,10 @@ shape_summary <- df %>%
   ) %>%
   arrange(desc(count))
 
-shape_summary
+kable(shape_summary,
+      col.names = c("UFO Shape", "Count", "Avg Duration (min)"),
+      align = "lrr",
+      caption = "UFO Sightings by Shape")
 ```
 
  - Well... that can't be right...
@@ -605,7 +608,10 @@ shape_summary
 
 ```{r echo=FALSE, warning=FALSE}
 df %>% filter(length_min>1e6) %>% 
-  select(-c(length_of_encounter_seconds,DATE_2,description,year, month, day ,hour, min, month_name, month_name_ordered,state.province))
+  select(-c(length_of_encounter_seconds,DATE_2,description,year, month, day ,hour, min, month_name, month_name_ordered,state.province)) %>% 
+  kable(caption = "Extreme UFO Encounter Durations") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE)
 ```
 
  - 21 years?
@@ -630,7 +636,10 @@ shape_summary <- df %>%
   ) %>%
   arrange(desc(count))
 
-shape_summary
+kable(shape_summary,
+      col.names = c("UFO Shape", "Count", "Avg Duration (min)"),
+      align = "lrr",
+      caption = "UFO Sightings by Shape")
 
 ```
 
