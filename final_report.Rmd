@@ -635,34 +635,35 @@ shape_summary
 ```
 
  - Perfect! Much more reasonable.
- 
- 
-# Well, I think we've uncovered some decent information in determining where to meet up with our new BFF E.T.
 
- - Make sure you book your trip for the summertime.
- - Your best bet is going to be in Texas, Florida, New York, Washington, or California...
-   - We're betting on California, though.
- - E.T. must not know about suntan lotion, so plan to pull an all-nighter over the weekend.
- - And lastly, keep an eye out for abnormal lights!
-   - Maybe E.T. is into the California rave scene...
-  
+---
+ 
+# In Conclusion
+
+We have learned a lot, not only about our data, but about how datasets can impose certain limitations. 
+
+To begin, let's compile all of the factors to give yourself the greatest chance at running into E.T.:
+
+ 1. **Country** - United States
+ 2. **State** - California
+ 3. **Season** - Summer
+ 4. **Day of the Week** - Saturday
+ 5. **Time of Day** - Night
+ 6. **What to Look Out For** - A light in the sky
+ 
+We believe—given the information in our dataset—that by abiding by these factors, your chances of an extraterrestrial encounter will be at their best.
+
+As for what comes as a limitation, we felt a few factors could likely skew the results above.
+
+ - **Language** - We briefly touched on it, but most of these reports came from very few countries. This, in no way, means that there have no been extraterrestrial sightings elsewhere in the world. For all we know, Asia could have a much larger record of sightings.
+ - **Population** - While the data points to zones with the highest concentration of reports, much more data would need to be gathered to ensure fair analysis across the board. California pulls ahead, likely, due to its immense population. A more concentrated, or accurate, depiction would've been to try and determine the reports per capita. Unfortunately, we did not have a dataset to facilitate that deep of a look.
+ 
+---
   
 # To infinity...
+
+<center>Thank you for reading. Now, off to Coachella!</center>
 
 ```{r, echo=FALSE, fig.align='center', out.width='60%'}
 knitr::include_graphics("ufo_rave.png")
 ```
-# Data:
-- Display and Summary:
-
-# Exploratory Data Analysis
-- Discovery
-- plots/graphs/tables
-- explanation
-
-# Summary
-- problem and insights
-- implication and limitations
-- formatting and other requirements
-
-We always hear about controversies and tinfoil hats, but we were curious how often do those from space come to visit, if at all? Is Earth a local hotspot for E.T. and his friends? Is Coachella a galaxy-wide attraction? These questions felt fun to dive into and answer.
