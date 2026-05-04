@@ -327,14 +327,13 @@ Armed with this information, we can now further analyze *when* to find E.T.
 
 ---
 
-# So Far...
+# Time to Look into the When
 
- - Okay, so we know that we're already living in the country filled with the most sightings of E.T. activity. That's great!
- - Fortunately, Texas is also in the top rankings!
- - This is only a part of the story, though. When is also impornant to know!
+Since we were able to ascertain a pretty good depiction of *where* these occurences happen, it's time to dissect the *when*. Our dataset was a bit tricky in this regard. When we first looked at everything within, all of the numerical columns were stored as strings. This made sorting and tidying the data almost impossible.
+
+Fortunately, thanks to lubridate, we were able to separate parts of these strings into integers. With that, we are now able to derive more granular details about when these sightings occurred.
  
- 
-# First, let's look at the seasons!
+## First, let's look at the seasons!
 
 ```{r echo=FALSE, warning=FALSE}
 df %>%
